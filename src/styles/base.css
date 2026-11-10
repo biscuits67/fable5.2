@@ -1,0 +1,61 @@
+:root {
+  --f-display: 'Unbounded Variable', sans-serif;
+  --f-body: 'Onest Variable', sans-serif;
+  --f-mono: 'JetBrains Mono Variable', monospace;
+  /* Unbounded is very wide, so display sizes are scaled down by this factor. */
+  --dk: 0.8;
+  --acc: #3d6bff;
+  --acc-deep: #1c3bb8;
+  --acc2: #5fe1ff;
+  --violet: #7b6bff;
+  --ok: #22b877;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --bounce: cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+html[data-theme='dark'] {
+  --bg: #050a26; --card: #0d1642; --line: rgba(150, 180, 255, 0.2); --text: #f4f7ff; --mute: #a3b3e0; --scrim: rgba(3, 6, 24, 0.72);
+  --app-bg: #060a1a; --app-side: #0a1024; --app-card: #111a38; --app-line: rgba(140, 170, 255, 0.15); --app-text: #eaf0ff; --app-mute: #7f8db8;
+  color-scheme: dark;
+}
+html[data-theme='light'] {
+  --bg: #e8efff; --card: #ffffff; --line: rgba(20, 50, 130, 0.15); --text: #071038; --mute: #54628f; --scrim: rgba(214, 226, 255, 0.72);
+  --app-bg: #ffffff; --app-side: #f1f5fe; --app-card: #e6eeff; --app-line: rgba(20, 45, 110, 0.13); --app-text: #0b1433; --app-mute: #64719a;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html, body { overflow-x: clip; }
+body { background: var(--bg); color: var(--text); font-family: var(--f-body); font-weight: 500; line-height: 1.5; -webkit-font-smoothing: antialiased; transition: background 0.5s, color 0.5s; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 3px solid var(--acc2); outline-offset: 3px; }
+ul, ol { list-style: none; padding: 0; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding-inline: 24px; }
+.mono { font-family: var(--f-mono); }
+.d { font-family: var(--f-display); font-weight: 800; letter-spacing: -0.035em; }
+h1, h2, h3 { overflow-wrap: break-word; }
+
+/* Scroll reveal. `backwards` fill keeps the start pose during the stagger delay and then
+   releases the element, so hover transforms keep working afterwards. */
+.rv { opacity: 0; }
+.rv.in { opacity: 1; animation: rise 0.9s var(--ease) backwards; animation-delay: calc(var(--d, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(34px) scale(0.98); } }
+@keyframes float { 50% { transform: translateY(-18px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 26px; border-radius: 999px; font-weight: 800; font-size: 15px; transition: transform 0.3s var(--bounce), box-shadow 0.3s; }
+.btn:hover { transform: translateY(-3px) scale(1.03); }
+.btn:active { transform: scale(0.96); }
+.btn-p { background: var(--acc); color: #fff; box-shadow: 0 8px 0 var(--acc-deep); }
+.btn-p:hover { box-shadow: 0 11px 0 var(--acc-deep); }
+.btn-w { background: var(--card); border: 1.5px solid var(--line); }
+.btn-l { background: #fff; color: #1d35c4; box-shadow: 0 8px 0 rgba(4, 12, 80, 0.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv.in { animation: none; }
+}

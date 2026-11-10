@@ -1,0 +1,226 @@
+import type { Dict } from './en';
+
+export const fr: Dict = {
+  meta: { title: 'Ethereum AI — quatre modèles d’IA débloqués par votre wallet' },
+  nav: {
+    how: 'Fonctionnement',
+    models: 'Modèles',
+    compare: 'Comparer',
+    access: 'Accès',
+    faq: 'FAQ',
+    connect: 'Connecter un wallet',
+    theme: 'Changer de thème',
+    language: 'Langue',
+    back: 'Retour au site',
+  },
+  hero: {
+    line1: 'L’IA qui vit',
+    line2: 'sur',
+    highlight: 'Ethereum',
+    lead: 'Quatre modèles pour le trading, le code et les questions du quotidien. Ni forfait ni paiement. Un wallet actif suffit.',
+    watch: 'Voir la démo',
+    sticker1: 'Sans abonnement',
+    sticker2: '0 ETH de frais',
+  },
+  demo: {
+    title: 'Voyez-la à l’œuvre',
+    step1: 'Connectez un wallet',
+    step2: 'Le solde est vérifié',
+    step3: 'Choisissez un modèle et demandez',
+    tabCode: 'Écrire un smart contract',
+    tabPlan: 'Créer un plan de trading',
+    tabAsk: 'Poser une question',
+    popTitle: 'Connectez un wallet',
+    popSub: 'Vérification du solde en lecture seule. Rien n’est prélevé.',
+    checking: 'Vérification du solde…',
+  },
+  app: {
+    models: 'Modèles',
+    selectModel: 'Choisissez un modèle',
+    connectFirst: 'Connectez un wallet pour commencer',
+    pickAndAsk: 'Choisissez un modèle et demandez',
+    placeholder: 'Posez votre question…',
+    unlocked: 'Ouvert',
+    readOnly: 'lecture seule',
+    allUnlocked: 'Les 4 modèles sont débloqués',
+    lumenOnly: 'Lumen ouvert · 3 demandent 0.5 ETH',
+    noneUnlocked: 'Le solde est inférieur à 0.1 ETH',
+    demoBadge: 'Démo',
+    send: 'Envoyer',
+    changeWallet: 'Changer de wallet',
+    suggestions: 'Essayez de demander',
+    demoReply:
+      'Ceci est une version de démonstration : les réponses en direct sont désactivées. Touchez la question suggérée pour voir comment {model} répond.',
+    lockedTitle: '{model} demande {min} ETH',
+    lockedBody:
+      'Votre wallet de démo contient {balance} ETH. Ce n’est pas un prix : rien n’est prélevé, le solde doit simplement se trouver dans votre wallet.',
+    lockedNoWallet: 'Connectez un wallet actif contenant au moins {min} ETH pour ouvrir ce modèle. Rien n’est prélevé.',
+    lockedCta: 'Changer de wallet de démo',
+    planChart: 'ETH · 12 semaines · achats indiqués',
+  },
+  scenarios: {
+    code: {
+      prompt: 'Écris un token ERC-20 qui brûle 1 % à chaque transfert',
+      reply: 'C’est fait. Un token minimal sur OpenZeppelin 5, avec le burn de 1 % dans _update pour qu’il s’applique à chaque transfert.',
+    },
+    plan: {
+      prompt: 'Crée un plan DCA pour ETH avec 500 USDC par mois',
+      reply: 'Voici un plan qui achète régulièrement et renforce pendant les baisses. Ceci n’est pas un conseil financier.',
+      rows: [
+        ['Achat hebdomadaire', '115 USDC chaque lundi'],
+        ['Règle de baisse', 'Montant doublé à 10 % sous la moyenne sur 30 jours'],
+        ['Réserve', '40 USDC par mois gardés pour les baisses'],
+      ],
+    },
+    ask: {
+      prompt: 'Qu’est-ce que le restaking, en termes simples ?',
+      reply:
+        'Le restaking permet à l’ETH que vous avez déjà mis en staking de sécuriser aussi d’autres services : un même dépôt peut donc rapporter une seconde récompense. La contrepartie est un risque plus élevé : si l’un de ces services sanctionne ses validateurs, une partie de votre stake peut être retirée.',
+    },
+    apex: {
+      prompt: 'Conçois un vault de rendement et décris son contrat',
+      reply:
+        'Je le découperais en deux parties. Stratégie : déposer l’ETH dans un token de liquid staking, le prêter, puis rééquilibrer chaque semaine quand l’écart de taux dépasse 0.5 %. Contrat : un vault ERC-4626 avec une fonction de rééquilibrage réservée au keeper, des frais de performance plafonnés à 10 % et une pause d’urgence. Je peux écrire le contrat complet ensuite.',
+    },
+  },
+  models: {
+    title1: 'Quatre modèles.',
+    title2: 'Choisissez votre puissance.',
+    lead: 'Un modèle s’ouvre à 0.1 ETH. Trois autres s’ouvrent à 0.5 ETH. Vous ne payez jamais pour aucun d’eux.',
+    from: 'dès {min} ETH',
+    details: 'Détails',
+    unlockAt: 'S’ouvre à',
+    modalCta: 'Connectez un wallet pour essayer',
+    modalOpen: 'Ouvrir dans l’app',
+    items: {
+      lumen: {
+        role: 'Chat universel',
+        text: 'Des réponses rapides et claires sur la crypto et tout le reste.',
+        points: [
+          'Explique n’importe quel sujet crypto simplement',
+          'Résumés, traductions et tâches du quotidien',
+          'Les réponses les plus rapides des quatre',
+        ],
+      },
+      vector: {
+        role: 'Trading et stratégies',
+        text: 'Analyse de marché, plans DeFi et scénarios de risque.',
+        points: [
+          'Construit des plans d’entrée, de sortie et de DCA',
+          'Compare les rendements DeFi et leurs risques',
+          'Montre le raisonnement derrière chaque étape',
+        ],
+      },
+      forge: {
+        role: 'Code crypto',
+        text: 'Smart contracts, bots et scripts, écrits et relus.',
+        points: [
+          'Écrit des contrats Solidity et leurs tests',
+          'Crée des bots de trading et des scripts on-chain',
+          'Relit votre code et explique chaque correction',
+        ],
+      },
+      apex: {
+        role: 'Raisonnement phare',
+        text: 'Le modèle le plus poussé pour les longues tâches mêlant marchés et code.',
+        points: [
+          'Gère les projets longs en plusieurs étapes',
+          'Associe analyse de marché et code',
+          'Les réponses les plus complètes des quatre',
+        ],
+      },
+    },
+  },
+  compare: {
+    title: 'Comparez les modèles',
+    lead: 'Le même wallet, des points forts différents.',
+    model: 'Modèle',
+    bestFor: 'Idéal pour',
+    speed: 'Vitesse',
+    depth: 'Profondeur de raisonnement',
+    code: 'Code',
+    markets: 'Analyse de marché',
+    balance: 'Solde requis',
+    bestForItems: {
+      lumen: 'Questions du quotidien',
+      vector: 'Plans de trading',
+      forge: 'Contrats et bots',
+      apex: 'Projets complexes',
+    },
+    ratingLabel: '{value} sur 3',
+  },
+  access: {
+    title1: 'C’est une vérification,',
+    title2: 'pas un paiement.',
+    p1: 'Les wallets vides et jetables sont la porte d’entrée des bots et des fermes à spam. Demander un wallet actif garde les modèles rapides pour les vraies personnes.',
+    p2: 'Nous lisons une seule donnée publique : votre solde. Vos ETH restent dans votre wallet en permanence.',
+    tags: ['Sans abonnement', 'Sans dépôt', 'Rien à signer', 'Lecture seule'],
+    widgetLabel: 'Votre wallet · lecture seule',
+    from01: 'Dès 0.1 ETH',
+    from05: 'Dès 0.5 ETH',
+    plus: '+ Vector, Forge, Apex',
+    charged: 'Prélevé pour l’utilisation',
+  },
+  faq: {
+    title: 'Questions et réponses',
+    items: [
+      {
+        q: 'Le solde est-il un paiement ?',
+        a: 'Non. Rien n’est prélevé, déplacé ni bloqué. Les ETH doivent simplement se trouver dans votre wallet pendant que vous utilisez les modèles.',
+      },
+      {
+        q: 'Pourquoi exiger un solde ?',
+        a: 'Les wallets vides et tout juste créés sont l’outil principal des bots et des fermes à spam. Demander un wallet actif garde les modèles rapides pour les vraies personnes.',
+      },
+      {
+        q: 'Que peut voir ou faire le site avec mon wallet ?',
+        a: 'Il lit votre adresse publique et votre solde, les mêmes données que chacun peut consulter sur un explorateur de blocs. Il ne peut pas déplacer de fonds et ne vous demande jamais de signer une transaction.',
+      },
+      {
+        q: 'Pourquoi trois modèles demandent-ils 0.5 ETH ?',
+        a: 'Vector, Forge et Apex consomment bien plus de puissance de calcul par requête. Un seuil plus élevé les garde disponibles pour les utilisateurs actifs.',
+      },
+      {
+        q: 'Que se passe-t-il si mon solde passe sous le seuil ?',
+        a: 'Les modèles concernés se verrouillent jusqu’au retour du solde. Vous ne perdez rien et il n’y a rien à résilier.',
+      },
+      {
+        q: 'Est-ce le produit final ?',
+        a: 'Pas encore. C’est une démo : la connexion du wallet et les réponses sont simulées pour vous montrer comment tout fonctionnera.',
+      },
+    ],
+  },
+  cta: {
+    title: 'Prêt dès que votre wallet l’est.',
+    lead: 'Connexion en quelques secondes. Sans inscription, sans carte, sans abonnement.',
+  },
+  footer: {
+    disclaimer:
+      'Version de démonstration. La connexion du wallet et les réponses de l’IA sont simulées. Sans lien avec l’Ethereum Foundation. Rien ici ne constitue un conseil financier.',
+    rights: '© 2026 Ethereum AI',
+  },
+  wallet: {
+    demoMode: 'Mode démo · aucune connexion réelle',
+    title: 'Connectez un wallet',
+    sub: 'Nous lisons uniquement votre solde public. Rien n’est prélevé, déplacé ni bloqué.',
+    kinds: { browser: 'Navigateur', mobile: 'Mobile', app: 'App', hardware: 'Matériel' },
+    pickTitle: 'Choisissez un solde de démo',
+    pickSub: 'Il n’y a pas de vrai wallet dans cette démo. Choisissez un solde pour voir chaque niveau d’accès.',
+    optLow: 'Sous le seuil',
+    optMid: 'Lumen uniquement',
+    optHigh: 'Les quatre modèles',
+    checking: 'Vérification du solde',
+    checkingSub: 'Lecture du solde public on-chain via {wallet}',
+    verified: 'Wallet vérifié',
+    notEnough: 'Pas encore suffisant',
+    balance: 'Solde actif',
+    resAll: 'Les quatre modèles sont débloqués. Vos ETH ne quittent jamais votre wallet.',
+    resLumen: 'Lumen est débloqué. Vector, Forge et Apex s’ouvrent à 0.5 ETH.',
+    resNone:
+      'Ce wallet contient moins de 0.1 ETH, les modèles restent donc verrouillés. Nous demandons un wallet actif pour écarter les bots. Ce n’est jamais un paiement.',
+    open: 'Ouvrir l’app',
+    tryOther: 'Essayer un autre solde',
+    disconnect: 'Déconnecter',
+    close: 'Fermer',
+  },
+};

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Ethereum AI: four AI models for trading, code and everyday questions, unlocked by an active wallet instead of a subscription." />
+    <meta name="theme-color" content="#050a26" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Ethereum AI</title>
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        var saved = localStorage.getItem('eai.theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

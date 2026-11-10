@@ -1,0 +1,28 @@
+/* CSS-only 3D objects: crystal, coin and glossy ball. */
+.p3 { perspective: 900px; display: inline-block; }
+.gem { --s: 120px; display: block; position: relative; width: var(--s); height: calc(var(--s) * 2.36); transform-style: preserve-3d; animation: gem 14s linear infinite; }
+@keyframes gem { from { transform: rotateX(-10deg) rotateY(0); } to { transform: rotateX(-10deg) rotateY(360deg); } }
+.gem i { position: absolute; left: 0; width: var(--s); }
+/* Face angles follow from the pyramid heights: asin(0.5 / slant length). */
+.gem .t { top: calc(var(--s) * -0.0928); height: calc(var(--s) * 1.3928); transform-origin: 50% 100%; clip-path: polygon(50% 0, 0 100%, 100% 100%); transform: rotateY(var(--a)) translateZ(calc(var(--s) / 2)) rotateX(21.04deg); }
+.gem .b { top: calc(var(--s) * 1.38); height: calc(var(--s) * 1.0296); transform-origin: 50% 0; clip-path: polygon(0 0, 100% 0, 50% 100%); transform: rotateY(var(--a)) translateZ(calc(var(--s) / 2)) rotateX(-29.05deg); }
+.gem .t:nth-child(1) { background: linear-gradient(#f4f8ff, #8fb0ff); }
+.gem .t:nth-child(2) { background: linear-gradient(#c9dcff, #4f7dff); }
+.gem .t:nth-child(3) { background: linear-gradient(#9dbcff, #2f55e6); }
+.gem .t:nth-child(4) { background: linear-gradient(#dfeaff, #6f97ff); }
+.gem .b:nth-child(5) { background: linear-gradient(#5e8bff, #bfe9ff); }
+.gem .b:nth-child(6) { background: linear-gradient(#2c50d8, #6fb7ff); }
+.gem .b:nth-child(7) { background: linear-gradient(#1c3bb8, #4f9bff); }
+.gem .b:nth-child(8) { background: linear-gradient(#4470f0, #a4dcff); }
+
+.coin { --d: 92px; display: block; position: relative; width: var(--d); height: var(--d); transform-style: preserve-3d; animation: coin 7s linear infinite; }
+@keyframes coin { from { transform: rotateX(14deg) rotateY(0); } to { transform: rotateX(14deg) rotateY(360deg); } }
+.coin i { position: absolute; inset: 0; border-radius: 50%; background: #2747c9; transform: translateZ(var(--z)); }
+.coin i.f { background: radial-gradient(circle at 32% 28%, #eaf2ff, #7fa4ff 38%, #3559e6 78%); box-shadow: inset 0 0 0 calc(var(--d) * 0.07) rgba(255, 255, 255, 0.35); }
+.coin i.f::after { content: ''; position: absolute; inset: 24% 34%; background: #fff; opacity: 0.95; clip-path: polygon(50% 0, 100% 50%, 50% 68%, 0 50%, 50% 0, 50% 100%, 100% 60%, 50% 78%, 0 60%, 50% 100%); }
+
+.ball { display: block; border-radius: 50%; background: radial-gradient(circle at 30% 26%, #fff 0, #a9c6ff 14%, var(--bc, #3d6bff) 46%, #0b1c7a 100%); box-shadow: inset -8px -14px 28px rgba(2, 6, 60, 0.55), 0 34px 50px -22px rgba(30, 70, 255, 0.7); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gem, .coin { animation-duration: 60s; }
+}

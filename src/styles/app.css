@@ -1,0 +1,59 @@
+/* Demo workspace page. Reuses the chat pieces from demo.css at full size. */
+.ap { display: grid; grid-template-columns: 320px 1fr; gap: 16px; padding-block: 28px 0; color: var(--app-text); }
+.ap-side, .ap-main { border-radius: 36px; border: 1.5px solid var(--line); overflow: hidden; }
+.ap-side { display: flex; flex-direction: column; gap: 8px; padding: 22px 16px 16px; background: var(--app-side); }
+.ap-models { display: grid; gap: 6px; }
+.ap .a-lab { font-size: 11px; padding: 4px 10px 8px; }
+.ap .m { padding: 12px 10px; border-radius: 18px; gap: 12px; }
+.ap .m:hover { background: var(--app-card); opacity: 1; }
+.ap .m-ic { width: 42px; height: 42px; padding: 10px; border-radius: 13px; }
+.ap .m b { font-size: 15.5px; }
+.ap .m small { font-size: 12.5px; }
+.ap .m em { font-size: 10.5px; padding: 5px 9px; }
+.ap .a-wallet { margin-top: 18px; padding: 16px; border-radius: 22px; }
+.ap-connect { width: 100%; }
+.ap-acct small { display: block; font: 600 11.5px var(--f-mono); color: var(--app-mute); }
+.ap-acct b { display: block; font-size: 26px; margin: 6px 0 4px; }
+.ap-acct em { display: block; font: 700 11.5px var(--f-mono); font-style: normal; color: var(--ok); }
+.ap-change { margin-top: 14px; font-weight: 700; font-size: 13.5px; color: var(--app-mute); text-decoration: underline; text-underline-offset: 4px; }
+.ap-change:hover { color: var(--app-text); }
+
+.ap-main { display: flex; flex-direction: column; height: max(560px, calc(100dvh - 150px)); background: var(--app-bg); }
+.ap .a-top { padding: 22px 26px 18px; }
+.ap .a-top b { font-size: 20px; text-transform: uppercase; }
+.ap .a-top span { font-size: 10.5px; padding: 5px 10px; }
+.ap-chat { flex: 1; min-height: 0; overflow-y: auto; padding: 22px 26px; display: flex; flex-direction: column; gap: 12px; }
+.ap-chat .empty { display: grid; gap: 14px; justify-items: center; font-size: 17px; }
+.ap-chat .empty small { font: 700 11px var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.chip { max-width: 460px; padding: 14px 20px; border-radius: 22px; border: 1.5px solid var(--acc); color: var(--app-text); font-weight: 700; transition: background 0.25s, color 0.25s, transform 0.3s var(--bounce); }
+.chip:hover { background: var(--acc); color: #fff; transform: translateY(-3px); }
+.ap-turn { display: grid; gap: 10px; justify-items: start; }
+.ap .msg { font-size: 15.5px; padding: 13px 18px; border-radius: 22px; max-width: min(640px, 88%); }
+.ap .msg.u { border-bottom-right-radius: 6px; }
+.ap .msg.a { border-bottom-left-radius: 6px; min-height: 48px; }
+.ap .code, .ap .plan { width: 100%; max-width: 760px; }
+.ap .code pre { font-size: 12.5px; line-height: 1.6; padding: 16px 18px; overflow-x: auto; }
+.ap .code header { font-size: 11.5px; padding: 11px 16px; }
+.ap .plan li { padding: 14px 16px; border-radius: 16px; }
+.ap .plan li small, .ap .chart small { font-size: 10.5px; }
+.ap .plan li b { font-size: 14.5px; }
+.ap .chart { border-radius: 16px; padding: 16px; }
+.ap .a-in { padding: 14px 26px 22px; }
+.ap-input { flex: 1; min-width: 0; height: 54px; padding: 0 20px; border-radius: 18px; border: 1.5px solid var(--app-line); background: var(--app-side); color: var(--app-text); font: 600 15.5px var(--f-body); transition: border-color 0.25s; }
+.ap-input::placeholder { color: var(--app-mute); }
+.ap-input:focus { outline: none; border-color: var(--acc); }
+.ap-input:disabled { opacity: 0.6; }
+.ap .send { width: 54px; height: 54px; border-radius: 18px; }
+.ap .send:not(:disabled):hover { transform: translateY(-2px); }
+
+@media (max-width: 900px) {
+  .ap { grid-template-columns: 1fr; }
+  .ap-models { grid-template-columns: 1fr 1fr; }
+  .ap-main { height: max(520px, calc(100dvh - 120px)); }
+  .ap .plan { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .ap-models { grid-template-columns: 1fr; }
+  .ap-chat, .ap .a-in, .ap .a-top { padding-inline: 16px; }
+  .ap-side, .ap-main { border-radius: 28px; }
+}

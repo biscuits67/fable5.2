@@ -1,0 +1,226 @@
+import type { Dict } from './en';
+
+export const pt: Dict = {
+  meta: { title: 'Ethereum AI — quatro modelos de IA liberados pela sua carteira' },
+  nav: {
+    how: 'Como funciona',
+    models: 'Modelos',
+    compare: 'Comparar',
+    access: 'Acesso',
+    faq: 'Perguntas',
+    connect: 'Conectar carteira',
+    theme: 'Mudar tema',
+    language: 'Idioma',
+    back: 'Voltar ao site',
+  },
+  hero: {
+    line1: 'A IA que vive',
+    line2: 'na',
+    highlight: 'Ethereum',
+    lead: 'Quatro modelos para trading, código e perguntas do dia a dia. Sem planos, sem pagamentos. Uma carteira ativa é o seu passe.',
+    watch: 'Ver funcionando',
+    sticker1: 'Sem assinatura',
+    sticker2: '0 ETH em taxas',
+  },
+  demo: {
+    title: 'Veja em ação',
+    step1: 'Conecte uma carteira',
+    step2: 'O saldo é verificado',
+    step3: 'Escolha um modelo e pergunte',
+    tabCode: 'Escrever um smart contract',
+    tabPlan: 'Montar um plano de trading',
+    tabAsk: 'Perguntar qualquer coisa',
+    popTitle: 'Conecte uma carteira',
+    popSub: 'Verificação de saldo somente leitura. Nada é cobrado.',
+    checking: 'Verificando saldo…',
+  },
+  app: {
+    models: 'Modelos',
+    selectModel: 'Escolha um modelo',
+    connectFirst: 'Conecte uma carteira para começar',
+    pickAndAsk: 'Escolha um modelo e pergunte',
+    placeholder: 'Pergunte qualquer coisa…',
+    unlocked: 'Liberado',
+    readOnly: 'somente leitura',
+    allUnlocked: 'Os 4 modelos liberados',
+    lumenOnly: 'Lumen liberado · 3 pedem 0.5 ETH',
+    noneUnlocked: 'O saldo está abaixo de 0.1 ETH',
+    demoBadge: 'Demo',
+    send: 'Enviar',
+    changeWallet: 'Trocar carteira',
+    suggestions: 'Experimente perguntar',
+    demoReply:
+      'Esta é uma versão demo, então as respostas ao vivo estão desativadas. Toque na pergunta sugerida para ver como o {model} responde.',
+    lockedTitle: '{model} exige {min} ETH',
+    lockedBody:
+      'Sua carteira de demonstração tem {balance} ETH. Isso não é um preço: nada é cobrado, o saldo só precisa estar na sua carteira.',
+    lockedNoWallet: 'Conecte uma carteira ativa com pelo menos {min} ETH para abrir este modelo. Nada é cobrado.',
+    lockedCta: 'Trocar carteira de demonstração',
+    planChart: 'ETH · 12 semanas · compras marcadas',
+  },
+  scenarios: {
+    code: {
+      prompt: 'Escreva um token ERC-20 que queime 1% a cada transferência',
+      reply: 'Pronto. Um token mínimo em OpenZeppelin 5, com a queima de 1% dentro de _update para valer em toda transferência.',
+    },
+    plan: {
+      prompt: 'Monte um plano de DCA para ETH com 500 USDC por mês',
+      reply: 'Aqui está um plano que compra com regularidade e aumenta a posição nas quedas. Não é aconselhamento financeiro.',
+      rows: [
+        ['Compra semanal', '115 USDC toda segunda-feira'],
+        ['Regra de queda', 'Tamanho dobrado a 10% abaixo da média de 30 dias'],
+        ['Reserva', '40 USDC por mês guardados para as quedas'],
+      ],
+    },
+    ask: {
+      prompt: 'O que é restaking, em palavras simples?',
+      reply:
+        'O restaking permite que o ETH que você já colocou em staking também proteja outros serviços, de modo que o mesmo depósito pode render uma segunda recompensa. Em troca, o risco aumenta: se um desses serviços punir seus validadores, parte do seu stake pode ser cortada.',
+    },
+    apex: {
+      prompt: 'Projete um vault de rendimento e esboce o contrato',
+      reply:
+        'Eu dividiria em duas partes. Estratégia: depositar ETH em um token de liquid staking, emprestá-lo e rebalancear toda semana quando a diferença de taxas passar de 0.5%. Contrato: um vault ERC-4626 com uma função de rebalanceamento exclusiva do keeper, um teto de 10% na taxa de performance e uma pausa de emergência. Posso escrever o contrato completo em seguida.',
+    },
+  },
+  models: {
+    title1: 'Quatro modelos.',
+    title2: 'Escolha a sua potência.',
+    lead: 'Um modelo abre com 0.1 ETH. Outros três abrem com 0.5 ETH. Você nunca paga por nenhum deles.',
+    from: 'a partir de {min} ETH',
+    details: 'Detalhes',
+    unlockAt: 'Abre com',
+    modalCta: 'Conecte a carteira para testar',
+    modalOpen: 'Abrir no app',
+    items: {
+      lumen: {
+        role: 'Chat universal',
+        text: 'Respostas rápidas e claras sobre cripto e todo o resto.',
+        points: [
+          'Explica qualquer assunto de cripto com palavras simples',
+          'Resumos, traduções e tarefas do dia a dia',
+          'As respostas mais rápidas dos quatro',
+        ],
+      },
+      vector: {
+        role: 'Trading e estratégias',
+        text: 'Análise de mercado, planos de DeFi e cenários de risco.',
+        points: [
+          'Monta planos de entrada, saída e DCA',
+          'Compara rendimentos de DeFi e seus riscos',
+          'Mostra o raciocínio por trás de cada passo',
+        ],
+      },
+      forge: {
+        role: 'Código cripto',
+        text: 'Smart contracts, bots e scripts, escritos e revisados.',
+        points: [
+          'Escreve contratos em Solidity e os testes',
+          'Cria bots de trading e scripts on-chain',
+          'Revisa o seu código e explica cada correção',
+        ],
+      },
+      apex: {
+        role: 'Raciocínio de ponta',
+        text: 'O modelo mais profundo para tarefas longas que unem mercados e código.',
+        points: [
+          'Conduz projetos longos em várias etapas',
+          'Une análise de mercado e código',
+          'As respostas mais completas dos quatro',
+        ],
+      },
+    },
+  },
+  compare: {
+    title: 'Compare os modelos',
+    lead: 'A mesma carteira, pontos fortes diferentes.',
+    model: 'Modelo',
+    bestFor: 'Ideal para',
+    speed: 'Velocidade',
+    depth: 'Profundidade de raciocínio',
+    code: 'Código',
+    markets: 'Análise de mercado',
+    balance: 'Saldo necessário',
+    bestForItems: {
+      lumen: 'Perguntas do dia a dia',
+      vector: 'Planos de trading',
+      forge: 'Contratos e bots',
+      apex: 'Projetos complexos',
+    },
+    ratingLabel: '{value} de 3',
+  },
+  access: {
+    title1: 'É uma verificação,',
+    title2: 'não uma cobrança.',
+    p1: 'Carteiras vazias e descartáveis são a porta de entrada de bots e fazendas de spam. Exigir uma carteira ativa mantém os modelos rápidos para pessoas de verdade.',
+    p2: 'Lemos um único dado público: o seu saldo. O seu ETH fica na sua carteira o tempo todo.',
+    tags: ['Sem assinatura', 'Sem depósito', 'Nada para assinar', 'Somente leitura'],
+    widgetLabel: 'Sua carteira · somente leitura',
+    from01: 'A partir de 0.1 ETH',
+    from05: 'A partir de 0.5 ETH',
+    plus: '+ Vector, Forge, Apex',
+    charged: 'Cobrado pelo uso',
+  },
+  faq: {
+    title: 'Perguntas e respostas',
+    items: [
+      {
+        q: 'O saldo é um pagamento?',
+        a: 'Não. Nada é cobrado, movido ou bloqueado. O ETH só precisa estar na sua carteira enquanto você usa os modelos.',
+      },
+      {
+        q: 'Por que vocês exigem um saldo?',
+        a: 'Carteiras vazias e recém-criadas são a principal ferramenta de bots e fazendas de spam. Exigir uma carteira ativa mantém os modelos rápidos para pessoas de verdade.',
+      },
+      {
+        q: 'O que o site pode ver ou fazer com a minha carteira?',
+        a: 'Ele lê o seu endereço público e o saldo, os mesmos dados que qualquer pessoa vê em um explorador de blocos. Não pode mover fundos e nunca pede que você assine uma transação.',
+      },
+      {
+        q: 'Por que três modelos exigem 0.5 ETH?',
+        a: 'Vector, Forge e Apex usam muito mais poder de computação por solicitação. Um limite mais alto os mantém disponíveis para usuários ativos.',
+      },
+      {
+        q: 'O que acontece se o meu saldo cair abaixo do limite?',
+        a: 'Os modelos correspondentes são bloqueados até o saldo voltar. Você não perde nada e não há nada para cancelar.',
+      },
+      {
+        q: 'Este é o produto final?',
+        a: 'Ainda não. Esta é uma demo: a conexão da carteira e as respostas são simuladas para você ver como tudo vai funcionar.',
+      },
+    ],
+  },
+  cta: {
+    title: 'Pronto quando a sua carteira estiver.',
+    lead: 'Conecte em poucos segundos. Sem cadastro, sem cartão, sem assinatura.',
+  },
+  footer: {
+    disclaimer:
+      'Versão demo. A conexão da carteira e as respostas da IA são simuladas. Sem vínculo com a Ethereum Foundation. Nada aqui é aconselhamento financeiro.',
+    rights: '© 2026 Ethereum AI',
+  },
+  wallet: {
+    demoMode: 'Modo demo · sem conexão real',
+    title: 'Conecte uma carteira',
+    sub: 'Lemos apenas o seu saldo público. Nada é cobrado, movido ou bloqueado.',
+    kinds: { browser: 'Navegador', mobile: 'Celular', app: 'App', hardware: 'Hardware' },
+    pickTitle: 'Escolha um saldo de demonstração',
+    pickSub: 'Não há carteira real nesta demo. Escolha um saldo para ver cada nível de acesso.',
+    optLow: 'Abaixo do limite',
+    optMid: 'Somente Lumen',
+    optHigh: 'Os quatro modelos',
+    checking: 'Verificando saldo',
+    checkingSub: 'Lendo o saldo público on-chain via {wallet}',
+    verified: 'Carteira verificada',
+    notEnough: 'Ainda não é o bastante',
+    balance: 'Saldo ativo',
+    resAll: 'Os quatro modelos estão liberados. O seu ETH nunca sai da sua carteira.',
+    resLumen: 'Lumen está liberado. Vector, Forge e Apex abrem com 0.5 ETH.',
+    resNone:
+      'Esta carteira tem menos de 0.1 ETH, então os modelos continuam bloqueados. Exigimos uma carteira ativa para afastar bots. Nunca é um pagamento.',
+    open: 'Abrir o app',
+    tryOther: 'Testar outro saldo',
+    disconnect: 'Desconectar',
+    close: 'Fechar',
+  },
+};
