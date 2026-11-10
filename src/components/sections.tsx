@@ -2,9 +2,8 @@ import { useState, type CSSProperties } from 'react';
 import { FULL_BALANCE, ENTRY_BALANCE, MODELS, formatEth, type ModelSpec } from '../data/models';
 import { LOCALES, fmt, useI18n } from '../i18n';
 import { SUPPORTED_WALLETS } from '../data/wallets';
-import { APP_HASH, navigate } from '../lib/route';
 import { useWallet } from '../state/wallet';
-import { AgentRunCard } from './app/ChatBlocks';
+import { AgentRunCard } from './AgentRunCard';
 import { AGENT_EVENTS } from '../data/agentRun';
 import { DemoShowcase } from './demo/DemoShowcase';
 import { EthMark, ModelIcon } from './icons';
@@ -205,9 +204,8 @@ const AGENT_PREVIEW_LOSS = 15;
 
 export function AgentSection() {
   const { t } = useI18n();
-  const { account, openModal } = useWallet();
+  const { openModal } = useWallet();
   const a = t.agent;
-  const canOpen = account !== null && account.balance >= FULL_BALANCE;
 
   return (
     <section id="agent" className="wrap">
@@ -237,8 +235,8 @@ export function AgentSection() {
               <span>{a.recNote}</span>
             </div>
           </div>
-          <button type="button" className="btn btn-p" onClick={() => (canOpen ? navigate(APP_HASH) : openModal())}>
-            {a.cta}
+          <button type="button" className="btn btn-p" onClick={openModal}>
+            {t.nav.connect}
           </button>
         </div>
         <div className="agent-vis">

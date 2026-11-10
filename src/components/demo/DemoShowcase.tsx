@@ -65,7 +65,6 @@ const MacScreen = memo(function MacScreen({ t }: { t: Dict }) {
             <div className="main">
               <header className="a-top">
                 <b className="a-title" />
-                <span>{t.app.demoBadge}</span>
               </header>
               <div className="chat" />
               <div className="a-in">

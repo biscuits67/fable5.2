@@ -1,7 +1,8 @@
 # Ethereum AI
 
-Demo website for a wallet-gated AI product: a landing page and an interactive demo workspace.
-Everything is simulated. There is no real wallet connection, no network calls and no AI backend.
+Landing page for a wallet-gated AI product.
+Nothing on it is live yet: there is no wallet connection, no network calls and no AI backend.
+The laptop animation and the trading run are scripted illustrations.
 
 ## Stack
 
@@ -42,14 +43,13 @@ After deploying, add the site in Google Search Console and submit `/sitemap.xml`
 | Path | Purpose |
 | --- | --- |
 | `src/pages/Landing.tsx` | Landing page sections |
-| `src/pages/AppPage.tsx` | Demo workspace (`#/app`): chat, history, portfolio and market panels |
-| `src/components/app/` | Workspace pieces: scripted chat logic, thinking block, composer, trading-agent run |
 | `src/data/agentRun.ts` | Scripted, deliberately modest trading-agent simulation |
 | `src/components/demo/` | Laptop mockup and the scripted demo player |
-| `src/components/WalletModal.tsx` | Sign-up style dialog: nickname, simulated wallet, demo balance, confirmation |
+| `src/components/WalletModal.tsx` | Sign-up dialog: access tiers, nickname check, supported wallets, confirmation. Submitting only closes it |
+| `src/components/AgentRunCard.tsx` | Card showing the scripted trading run |
 | `src/data/models.ts` | The four models and balance thresholds (0.1 / 0.5 ETH) |
 | `src/i18n/locales/` | Translations: en, es, it, fr, de, pt |
-| `src/state/` | Theme (dark / light) and demo wallet state |
+| `src/state/` | Theme (dark / light) and the sign-up dialog's open state |
 
 ## Adding a language
 

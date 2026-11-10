@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react';
-import { formatEth, isUnlocked, type ModelSpec } from '../data/models';
+import { formatEth, type ModelSpec } from '../data/models';
 import { useI18n } from '../i18n';
-import { APP_HASH, navigate } from '../lib/route';
 import { useWallet } from '../state/wallet';
 import { CheckIcon, ModelIcon } from './icons';
 import { Modal } from './Modal';
@@ -17,16 +16,14 @@ interface ModelModalProps {
 
 export function ModelModal({ model, open, onClose }: ModelModalProps) {
   const { t } = useI18n();
-  const { account, openModal } = useWallet();
+  const { openModal } = useWallet();
   if (!model) return null;
 
   const copy = t.models.items[model.id];
-  const unlocked = isUnlocked(model, account?.balance ?? null);
 
   const handleAction = () => {
     onClose();
-    if (unlocked) navigate(APP_HASH);
-    else openModal();
+    openModal();
   };
 
   return (
@@ -51,7 +48,7 @@ export function ModelModal({ model, open, onClose }: ModelModalProps) {
           <b className="mono">{formatEth(model.minBalance, 1)} ETH</b>
         </div>
         <button type="button" className="mbtn" onClick={handleAction}>
-          {unlocked ? t.models.modalOpen : t.models.modalCta}
+          {t.models.modalCta}
         </button>
       </div>
     </Modal>

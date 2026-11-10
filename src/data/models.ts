@@ -21,23 +21,6 @@ export const MODELS: readonly ModelSpec[] = [
   { id: 'apex', name: 'Apex', minBalance: FULL_BALANCE, color: '#dbe6ff', ink: '#071038', ratings: { speed: 1, depth: 3, code: 3, markets: 3 } },
 ];
 
-export function getModel(id: ModelId): ModelSpec {
-  const model = MODELS.find((m) => m.id === id);
-  if (!model) throw new Error(`Unknown model: ${id}`);
-  return model;
-}
-
-export function isUnlocked(model: ModelSpec, balance: number | null): boolean {
-  return balance !== null && balance >= model.minBalance;
-}
-
-export type AccessTier = 'none' | 'entry' | 'full';
-
-export function accessTier(balance: number): AccessTier {
-  if (balance >= FULL_BALANCE) return 'full';
-  return balance >= ENTRY_BALANCE ? 'entry' : 'none';
-}
-
 export function formatEth(value: number, digits = 2): string {
   return value.toFixed(digits);
 }

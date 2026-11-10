@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { formatEth } from '../data/models';
 import { LOCALES, useI18n } from '../i18n';
-import { HOME_HASH, type Route } from '../lib/route';
 import { useTheme } from '../state/theme';
 import { useWallet } from '../state/wallet';
 import { ChevronIcon, EthMark, ThemeIcon } from './icons';
@@ -55,43 +53,30 @@ function LanguageSwitcher() {
   );
 }
 
-export function Nav({ route }: { route: Route }) {
+export function Nav() {
   const { t } = useI18n();
   const { toggleTheme } = useTheme();
-  const { account, openModal } = useWallet();
+  const { openModal } = useWallet();
 
   return (
-    <nav className={`nav ${route === 'app' ? 'wide' : ''}`}>
-      <a className="logo d" href={HOME_HASH} aria-label="Ethereum AI">
+    <nav className="nav">
+      <a className="logo d" href="#" aria-label="Ethereum AI">
         <EthMark className="eth" />
         <span>ETHEREUM AI</span>
       </a>
       <div className="links">
-        {route === 'home' ? (
-          <>
-            <a href="#demo">{t.nav.how}</a>
-            <a href="#models">{t.nav.models}</a>
-            <a href="#compare">{t.nav.compare}</a>
-            <a href="#access">{t.nav.access}</a>
-            <a href="#faq">{t.nav.faq}</a>
-          </>
-        ) : (
-          <a href={HOME_HASH}>{t.nav.back}</a>
-        )}
+        <a href="#demo">{t.nav.how}</a>
+        <a href="#models">{t.nav.models}</a>
+        <a href="#compare">{t.nav.compare}</a>
+        <a href="#access">{t.nav.access}</a>
+        <a href="#faq">{t.nav.faq}</a>
       </div>
       <LanguageSwitcher />
       <button type="button" className="tt" onClick={toggleTheme} aria-label={t.nav.theme}>
         <ThemeIcon />
       </button>
-      <button type="button" className={`btn btn-p nav-cta ${account ? 'is-on' : ''}`} onClick={openModal}>
-        {account ? (
-          <>
-            <i className="dot" />
-            {formatEth(account.balance)} ETH
-          </>
-        ) : (
-          t.nav.connect
-        )}
+      <button type="button" className="btn btn-p nav-cta" onClick={openModal}>
+        {t.nav.connect}
       </button>
     </nav>
   );

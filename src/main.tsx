@@ -8,7 +8,6 @@ import './styles/objects.css';
 import './styles/landing.css';
 import './styles/demo.css';
 import './styles/modal.css';
-import './styles/app.css';
 import { App } from './App';
 
 const container = document.getElementById('root');

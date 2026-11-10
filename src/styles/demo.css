@@ -36,7 +36,6 @@
 .main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--app-bg); }
 .a-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 30px 22px 12px; border-bottom: 1px solid var(--app-line); }
 .a-top b { font: 800 15px var(--f-display); letter-spacing: -0.02em; }
-.a-top span { font: 700 9.5px var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--app-mute); border: 1px solid var(--app-line); padding: 4px 8px; border-radius: 99px; }
 .chat { flex: 1; min-height: 0; overflow: hidden; padding: 14px 22px; display: flex; flex-direction: column; gap: 8px; justify-content: flex-end; }
 .empty { margin: auto; text-align: center; color: var(--app-mute); font-weight: 600; }
 

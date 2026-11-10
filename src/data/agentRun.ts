@@ -3,10 +3,7 @@
  * the demo must not suggest that large or guaranteed returns are realistic.
  */
 export const AGENT_START_BALANCE = 0.5;
-export const AGENT_TARGET_BALANCE = 3;
 export const AGENT_SIMULATED_DAYS = 14;
-export const AGENT_TIMEFRAMES = [14, 30, 90] as const;
-export const AGENT_LOSS_LIMITS = [10, 15, 20] as const;
 
 const FEE = 0.0002;
 
@@ -73,15 +70,6 @@ export function formatPercent(ratio: number): string {
 export function formatSignedEth(value: number): string {
   return `${value >= 0 ? '+' : '−'}${Math.abs(value).toFixed(4)} ETH`;
 }
-
-/** The mandate typed by the user in the demo. Kept in English: it is user input, not interface copy. */
-export const AGENT_PROMPT = `Act as my autonomous AI crypto trading agent. I have allocated 0.50 ETH, and your objective is to grow my total balance to 3 ETH through trading.
-
-Analyze the market, select opportunities, execute trades, and manage positions independently within agreed risk limits. Adapt your strategy as market conditions change, account for all fees, and measure results in ETH.
-
-Before starting, confirm my timeframe and maximum acceptable loss. Do not use leverage, borrow funds, or add capital without my explicit approval. Stop trading if the loss limit is reached.
-
-Provide regular updates on my balance, open positions, and performance. Treat 3 ETH as a target, not a guaranteed outcome, and avoid forcing trades when opportunities are weak.`;
 
 const CHART_MIN = 0.494;
 const CHART_MAX = 0.526;
