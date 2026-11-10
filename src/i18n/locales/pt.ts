@@ -218,9 +218,6 @@ export const pt: Dict = {
     macReply: 'Limites confirmados: 14 dias, perda máxima de 15%. Começo com posições pequenas.',
   },
   signup: {
-    chooseWallet: "Escolha sua carteira",
-    walletSelected: "{wallet} selecionada",
-    back: "Voltar",
     title: 'Crie a sua conta',
     sub: 'A sua carteira é o seu login. Sem e-mail e sem senha.',
     howTitle: 'Como o acesso funciona',
