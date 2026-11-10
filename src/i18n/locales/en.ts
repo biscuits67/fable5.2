@@ -208,6 +208,9 @@ export const en = {
     lead: 'Connect in a few seconds. No sign-up, no card, no subscription.',
   },
   footer: {
+    tagline: 'AI models for trading, code and everyday questions, unlocked by your wallet.',
+    product: 'Product',
+    languages: 'Languages',
     disclaimer:
       'Demo build. Wallet connection and AI answers are simulated. Not affiliated with the Ethereum Foundation. Nothing here is financial advice.',
     rights: '© 2026 Ethereum AI',

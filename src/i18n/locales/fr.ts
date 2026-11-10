@@ -199,6 +199,9 @@ export const fr: Dict = {
     lead: 'Connexion en quelques secondes. Sans inscription, sans carte, sans abonnement.',
   },
   footer: {
+    tagline: 'Des modèles d’IA pour le trading, le code et les questions du quotidien, débloqués par votre wallet.',
+    product: 'Produit',
+    languages: 'Langues',
     disclaimer:
       'Version de démonstration. La connexion du wallet et les réponses de l’IA sont simulées. Sans lien avec l’Ethereum Foundation. Rien ici ne constitue un conseil financier.',
     rights: '© 2026 Ethereum AI',

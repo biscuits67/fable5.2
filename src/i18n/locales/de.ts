@@ -199,6 +199,9 @@ export const de: Dict = {
     lead: 'In wenigen Sekunden verbunden. Keine Anmeldung, keine Karte, kein Abo.',
   },
   footer: {
+    tagline: 'KI-Modelle für Trading, Code und Alltagsfragen, freigeschaltet durch deine Wallet.',
+    product: 'Produkt',
+    languages: 'Sprachen',
     disclaimer:
       'Demo-Version. Wallet-Verbindung und KI-Antworten sind simuliert. Keine Verbindung zur Ethereum Foundation. Nichts hiervon ist eine Finanzberatung.',
     rights: '© 2026 Ethereum AI',

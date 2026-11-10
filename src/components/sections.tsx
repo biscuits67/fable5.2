@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import { FULL_BALANCE, ENTRY_BALANCE, MODELS, formatEth, type ModelSpec } from '../data/models';
-import { fmt, useI18n } from '../i18n';
+import { LOCALES, fmt, useI18n } from '../i18n';
+import { SUPPORTED_WALLETS } from '../data/wallets';
 import { APP_HASH, navigate } from '../lib/route';
 import { useWallet } from '../state/wallet';
 import { AgentRunCard } from './app/ChatBlocks';
@@ -350,15 +351,71 @@ export function CtaSection() {
 }
 
 export function Footer() {
-  const { t } = useI18n();
+  const { t, locale, setLocale } = useI18n();
+  const links = [
+    { href: '#demo', label: t.nav.how },
+    { href: '#models', label: t.nav.models },
+    { href: '#compare', label: t.nav.compare },
+    { href: '#agent', label: t.agent.card },
+    { href: '#access', label: t.nav.access },
+    { href: '#faq', label: t.nav.faq },
+  ];
+
   return (
-    <footer className="wrap foot">
-      <div className="logo d">
-        <EthMark className="eth" />
-        <span>ETHEREUM AI</span>
+    <footer className="foot">
+      <div className="wrap foot-grid">
+        <div className="foot-brand">
+          <div className="logo d">
+            <EthMark className="eth" />
+            <span>ETHEREUM AI</span>
+          </div>
+          <p>{t.footer.tagline}</p>
+        </div>
+
+        <nav className="foot-col" aria-label={t.footer.product}>
+          <h3>{t.footer.product}</h3>
+          <ul>
+            {links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="foot-col">
+          <h3>{t.footer.languages}</h3>
+          <ul>
+            {LOCALES.map(({ code, name }) => (
+              <li key={code}>
+                <button type="button" className={code === locale ? 'on' : ''} aria-pressed={code === locale} onClick={() => setLocale(code)}>
+                  {name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="foot-col">
+          <h3>{t.signup.supported}</h3>
+          <ul className="foot-wallets">
+            {SUPPORTED_WALLETS.map(({ name, icon }) => (
+              <li key={name}>
+                <img src={icon} alt="" width={28} height={28} loading="lazy" />
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <p>{t.footer.disclaimer}</p>
-      <small>{t.footer.rights}</small>
+
+      <div className="wrap foot-legal">
+        <p>{t.footer.disclaimer}</p>
+        <small>{t.footer.rights}</small>
+      </div>
+      <div className="foot-mark d" aria-hidden="true">
+        ETHEREUM AI
+      </div>
     </footer>
   );
 }
