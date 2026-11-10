@@ -1,7 +1,11 @@
 import type { Dict } from './en';
 
 export const de: Dict = {
-  meta: { title: 'Ethereum AI — vier KI-Modelle, freigeschaltet durch deine Wallet' },
+  meta: {
+    title: 'Ethereum AI — vier KI-Modelle, freigeschaltet durch deine Wallet',
+    description:
+      'Vier starke KI-Modelle für Krypto-Trading, Smart-Contract-Code und Alltagsfragen. Kein Abo: Eine aktive Ethereum-Wallet ist dein Zugang.',
+  },
   nav: {
     how: 'So funktioniert es',
     models: 'Modelle',

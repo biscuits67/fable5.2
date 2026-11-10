@@ -3,10 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ethereum AI: four AI models for trading, code and everyday questions, unlocked by an active wallet instead of a subscription." />
+    <title>Ethereum AI — four AI models unlocked by your wallet</title>
+    <meta name="description" content="Four powerful AI models for crypto trading, smart contract code and everyday questions. No subscription: an active Ethereum wallet is your pass." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#050a26" />
+    <meta name="color-scheme" content="dark light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ethereum AI" />
+    <meta property="og:title" content="Ethereum AI — four AI models unlocked by your wallet" />
+    <meta property="og:description" content="Four powerful AI models for crypto trading, smart contract code and everyday questions. No subscription: an active Ethereum wallet is your pass." />
+    <meta property="og:locale" content="en" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ethereum AI: AI that lives on Ethereum" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Canonical URL, og:url, og:image, hreflang links and structured data are added at build time (see vite.config.ts). -->
+
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <title>Ethereum AI</title>
+    <link rel="apple-touch-icon" href="./icon-180.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <script>
       // Apply the saved theme before first paint to avoid a flash.
       try {
@@ -16,7 +32,23 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static summary for crawlers and browsers without JavaScript. React replaces it on load. -->
+      <main style="max-width: 720px; margin: 0 auto; padding: 48px 24px; font-family: system-ui, sans-serif; color: #f4f7ff">
+        <h1>Ethereum AI: AI that lives on Ethereum</h1>
+        <p>Four powerful, smart AI models for trading, code and everyday questions. No plans and no payments. An active wallet is your pass.</p>
+        <h2>Four models</h2>
+        <ul>
+          <li><strong>Lumen</strong>, universal chat: quick, clear answers about crypto and everything else. Opens with 0.1 ETH in an active wallet.</li>
+          <li><strong>Vector</strong>, trading and strategies: market research, DeFi plans and risk scenarios. Opens with 0.5 ETH.</li>
+          <li><strong>Forge</strong>, crypto code: smart contracts, bots and scripts, written and reviewed. Opens with 0.5 ETH.</li>
+          <li><strong>Apex</strong>, flagship reasoning: long tasks that mix markets and code. Opens with 0.5 ETH.</li>
+        </ul>
+        <h2>A balance check, not a charge</h2>
+        <p>The balance is never charged, moved or locked. It only shows that a wallet is real and active, which keeps bots out.</p>
+        <p>Demo build. Wallet connection and AI answers are simulated. Not affiliated with the Ethereum Foundation. Nothing here is financial advice.</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

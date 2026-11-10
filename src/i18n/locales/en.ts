@@ -10,7 +10,11 @@ interface ScenarioCopy {
 }
 
 export const en = {
-  meta: { title: 'Ethereum AI — four AI models unlocked by your wallet' },
+  meta: {
+    title: 'Ethereum AI — four AI models unlocked by your wallet',
+    description:
+      'Four powerful AI models for crypto trading, smart contract code and everyday questions. No subscription: an active Ethereum wallet is your pass.',
+  },
   nav: {
     how: 'How it works',
     models: 'Models',

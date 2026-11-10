@@ -23,6 +23,20 @@ npm run build
 npm run preview
 ```
 
+## Search engines and link previews
+
+Set the public address before building, so the absolute URLs are correct:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `VITE_SITE_URL` in `.env` and run `npm run build`. The build adds the canonical URL, `hreflang` links
+for the six languages (`/?lang=de` and so on), structured data, `robots.txt` and `sitemap.xml`.
+Without `VITE_SITE_URL` the build still works, but those parts are skipped and a warning is printed.
+
+After deploying, add the site in Google Search Console and submit `/sitemap.xml`.
+
 ## Structure
 
 | Path | Purpose |
