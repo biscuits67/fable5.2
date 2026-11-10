@@ -31,7 +31,7 @@ export function Hero() {
         {t.hero.lead}
       </Reveal>
       <Reveal className="cta" delay={2}>
-        <button type="button" className="btn btn-p" onClick={openModal}>
+        <button type="button" className="btn btn-p connect-btn" onClick={openModal}>
           {t.nav.connect}
         </button>
         <a className="btn btn-w" href="#demo">
@@ -235,7 +235,7 @@ export function AgentSection() {
               <span>{a.recNote}</span>
             </div>
           </div>
-          <button type="button" className="btn btn-p" onClick={openModal}>
+          <button type="button" className="btn btn-p connect-btn" onClick={openModal}>
             {t.nav.connect}
           </button>
         </div>
@@ -340,7 +340,7 @@ export function CtaSection() {
         <div className="obj f2"><Coin size={96} /></div>
         <h2 className="d">{t.cta.title}</h2>
         <p>{t.cta.lead}</p>
-        <button type="button" className="btn btn-l" onClick={openModal}>
+        <button type="button" className="btn btn-l connect-btn" onClick={openModal}>
           {t.nav.connect}
         </button>
       </Reveal>

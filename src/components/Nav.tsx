@@ -75,7 +75,7 @@ export function Nav() {
       <button type="button" className="tt" onClick={toggleTheme} aria-label={t.nav.theme}>
         <ThemeIcon />
       </button>
-      <button type="button" className="btn btn-p nav-cta" onClick={openModal}>
+      <button type="button" className="btn btn-p nav-cta connect-btn" onClick={openModal}>
         {t.nav.connect}
       </button>
     </nav>
