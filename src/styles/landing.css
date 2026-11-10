@@ -149,7 +149,6 @@ html[data-theme='light'] .foot-wm { opacity: 0.07; }
 .foot-wallets img { width: 28px; height: 28px; border-radius: 9px; filter: grayscale(1); opacity: 0.55; transition: filter 0.3s, opacity 0.3s, transform 0.3s var(--bounce); }
 .foot-wallets li:hover img { filter: none; opacity: 1; transform: scale(1.12); }
 .foot-legal { position: relative; display: grid; gap: 10px; margin-top: 56px; padding-top: 26px; border-top: 1.5px solid var(--line); font-size: 13.5px; }
-.foot-legal p { max-width: 720px; }
 /* Filled rather than stroked: the font's overlapping contours show as stray lines under text-stroke. */
 .foot-mark { margin: 34px 0 -0.14em; text-align: center; white-space: nowrap; font-size: clamp(30px, 8.7vw, 150px); line-height: 0.9; color: var(--line); opacity: 0.6; user-select: none; }
 .foot-col button { padding: 0; }

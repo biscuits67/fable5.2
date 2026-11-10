@@ -169,10 +169,6 @@ export const es: Dict = {
         q: '¿Qué pasa si mi saldo baja del umbral?',
         a: 'Los modelos correspondientes se bloquean hasta que el saldo vuelva. No pierdes nada y no hay nada que cancelar.',
       },
-      {
-        q: '¿Es este el producto final?',
-        a: 'Todavía no. Es una demo: la conexión de la wallet y las respuestas están simuladas para que veas cómo funcionará todo.',
-      },
     ],
   },
   cta: {
@@ -183,15 +179,12 @@ export const es: Dict = {
     tagline: 'Modelos de IA para trading, código y preguntas del día a día, desbloqueados por tu wallet.',
     product: 'Producto',
     languages: 'Idiomas',
-    disclaimer:
-      'Versión demo. La conexión de la wallet y las respuestas de la IA están simuladas. Sin relación con la Ethereum Foundation. Nada de esto es asesoramiento financiero.',
     rights: '© 2026 Ethereum AI',
   },
   agent: {
     card: 'Agente de trading autónomo',
     running: 'El agente está operando',
     done: 'Ejecución completada',
-    simNote: 'Simulación con datos de mercado inventados. No se realiza ninguna operación real.',
     day: 'Día {n}',
     balance: 'Saldo',
     result: 'Resultado',

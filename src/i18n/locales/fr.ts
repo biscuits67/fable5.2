@@ -169,10 +169,6 @@ export const fr: Dict = {
         q: 'Que se passe-t-il si mon solde passe sous le seuil ?',
         a: 'Les modèles concernés se verrouillent jusqu’au retour du solde. Vous ne perdez rien et il n’y a rien à résilier.',
       },
-      {
-        q: 'Est-ce le produit final ?',
-        a: 'Pas encore. C’est une démo : la connexion du wallet et les réponses sont simulées pour vous montrer comment tout fonctionnera.',
-      },
     ],
   },
   cta: {
@@ -183,15 +179,12 @@ export const fr: Dict = {
     tagline: 'Des modèles d’IA pour le trading, le code et les questions du quotidien, débloqués par votre wallet.',
     product: 'Produit',
     languages: 'Langues',
-    disclaimer:
-      'Version de démonstration. La connexion du wallet et les réponses de l’IA sont simulées. Sans lien avec l’Ethereum Foundation. Rien ici ne constitue un conseil financier.',
     rights: '© 2026 Ethereum AI',
   },
   agent: {
     card: 'Agent de trading autonome',
     running: 'L’agent est en train de trader',
     done: 'Exécution terminée',
-    simNote: 'Simulation avec des données de marché fictives. Aucun trade réel n’est passé.',
     day: 'Jour {n}',
     balance: 'Solde',
     result: 'Résultat',

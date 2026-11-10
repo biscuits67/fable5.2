@@ -169,10 +169,6 @@ export const de: Dict = {
         q: 'Was passiert, wenn mein Guthaben unter die Schwelle fällt?',
         a: 'Die betroffenen Modelle werden gesperrt, bis das Guthaben wieder reicht. Du verlierst nichts, und es gibt nichts zu kündigen.',
       },
-      {
-        q: 'Ist das schon das fertige Produkt?',
-        a: 'Noch nicht. Dies ist eine Demo: Wallet-Verbindung und Antworten sind simuliert, damit du siehst, wie alles funktionieren wird.',
-      },
     ],
   },
   cta: {
@@ -183,15 +179,12 @@ export const de: Dict = {
     tagline: 'KI-Modelle für Trading, Code und Alltagsfragen, freigeschaltet durch deine Wallet.',
     product: 'Produkt',
     languages: 'Sprachen',
-    disclaimer:
-      'Demo-Version. Wallet-Verbindung und KI-Antworten sind simuliert. Keine Verbindung zur Ethereum Foundation. Nichts hiervon ist eine Finanzberatung.',
     rights: '© 2026 Ethereum AI',
   },
   agent: {
     card: 'Autonomer Trading-Agent',
     running: 'Der Agent handelt',
     done: 'Lauf abgeschlossen',
-    simNote: 'Simulation mit erfundenen Marktdaten. Es werden keine echten Trades ausgeführt.',
     day: 'Tag {n}',
     balance: 'Guthaben',
     result: 'Ergebnis',

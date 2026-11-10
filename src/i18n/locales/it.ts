@@ -169,10 +169,6 @@ export const it: Dict = {
         q: 'Che cosa succede se il mio saldo scende sotto la soglia?',
         a: 'I modelli corrispondenti si bloccano finché il saldo non torna. Non perdi nulla e non c’è niente da disdire.',
       },
-      {
-        q: 'È il prodotto definitivo?',
-        a: 'Non ancora. È una demo: il collegamento del wallet e le risposte sono simulati per mostrarti come funzionerà tutto.',
-      },
     ],
   },
   cta: {
@@ -183,15 +179,12 @@ export const it: Dict = {
     tagline: 'Modelli di IA per trading, codice e domande di ogni giorno, sbloccati dal tuo wallet.',
     product: 'Prodotto',
     languages: 'Lingue',
-    disclaimer:
-      'Versione demo. Il collegamento del wallet e le risposte dell’IA sono simulati. Nessuna affiliazione con la Ethereum Foundation. Nulla di quanto qui riportato è una consulenza finanziaria.',
     rights: '© 2026 Ethereum AI',
   },
   agent: {
     card: 'Agente di trading autonomo',
     running: 'L’agente sta operando',
     done: 'Esecuzione completata',
-    simNote: 'Simulazione con dati di mercato inventati. Non viene eseguita alcuna operazione reale.',
     day: 'Giorno {n}',
     balance: 'Saldo',
     result: 'Risultato',

@@ -61,7 +61,6 @@ export function AgentRunCard({ step, done, loss, maxLog }: AgentRunCardProps) {
           </li>
         ))}
       </ul>
-      <p className="arun-note">{a.simNote}</p>
     </div>
   );
 }

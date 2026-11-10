@@ -19,7 +19,6 @@ export interface DemoAgentCopy {
   day: string;
   balance: string;
   result: string;
-  note: string;
   events: string[];
 }
 
@@ -222,7 +221,7 @@ export function createDemoPlayer(
       `<header><i class="pulse"></i><b>${escapeHtml(copy.running)}</b><span></span></header>` +
         `<div class="arun-stats"><div><small>${escapeHtml(copy.balance)}</small><b data-bal></b></div><div><small>${escapeHtml(copy.result)}</small><b data-res></b></div></div>` +
         `<svg class="arun-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none"><line x1="0" x2="${width}" y1="${y}" y2="${y}"/><polyline/></svg>` +
-        `<ul class="arun-log"></ul><p class="arun-note">${escapeHtml(copy.note)}</p>`,
+        `<ul class="arun-log"></ul>`,
       'arun',
     );
     const day = must<HTMLElement>(card, 'header span');

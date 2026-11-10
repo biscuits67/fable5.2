@@ -432,7 +432,6 @@ export function Footer() {
       </div>
 
       <div className="wrap foot-legal">
-        <p>{t.footer.disclaimer}</p>
         <small>{t.footer.rights}</small>
       </div>
       <div className="foot-mark d" aria-hidden="true">

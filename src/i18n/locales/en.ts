@@ -178,10 +178,6 @@ export const en = {
         q: 'What happens if my balance drops below the threshold?',
         a: 'The matching models lock again until the balance is back. You lose nothing, and there is nothing to cancel.',
       },
-      {
-        q: 'Is this the final product?',
-        a: 'Not yet. This is a demo: the wallet connection and the answers are simulated so you can see how everything will work.',
-      },
     ],
   },
   cta: {
@@ -192,15 +188,12 @@ export const en = {
     tagline: 'AI models for trading, code and everyday questions, unlocked by your wallet.',
     product: 'Product',
     languages: 'Languages',
-    disclaimer:
-      'Demo build. Wallet connection and AI answers are simulated. Not affiliated with the Ethereum Foundation. Nothing here is financial advice.',
     rights: '© 2026 Ethereum AI',
   },
   agent: {
     card: 'Autonomous trading agent',
     running: 'Agent is trading',
     done: 'Run complete',
-    simNote: 'Simulation with made-up market data. No real trades are placed.',
     day: 'Day {n}',
     balance: 'Balance',
     result: 'Result',

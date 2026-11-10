@@ -18,7 +18,7 @@ function buildScenarios(t: Dict): DemoScenario[] {
       balance: 0.52,
       prompt: a.macPrompt,
       reply: a.macReply,
-      agent: { running: a.running, done: a.done, day: a.day, balance: a.balance, result: a.result, note: a.simNote, events: a.events },
+      agent: { running: a.running, done: a.done, day: a.day, balance: a.balance, result: a.result, events: a.events },
     },
   ];
 }
