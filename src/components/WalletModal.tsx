@@ -1,4 +1,10 @@
 import { useEffect, useId, useState, type FormEvent } from 'react';
+import ledgerIcon from '../assets/wallets/ledger.svg';
+import metamaskIcon from '../assets/wallets/metamask.svg';
+import coinbaseIcon from '../assets/wallets/coinbase.svg';
+import trustIcon from '../assets/wallets/trust.svg';
+import walletConnectIcon from '../assets/wallets/wallet-connect.svg';
+import { NICKNAME_MAX, nicknameIssue } from '../data/nicknames';
 import { ENTRY_BALANCE, FULL_BALANCE, accessTier, formatEth, type AccessTier } from '../data/models';
 import { fmt, useI18n } from '../i18n';
 import type { Dict } from '../i18n/locales/en';
@@ -9,12 +15,18 @@ import { Modal } from './Modal';
 
 type Step = 'form' | 'progress' | 'result';
 /** Wallets listed as supported. This demo never talks to any of them. */
-const SUPPORTED_WALLETS = ['Trust Wallet', 'MetaMask', 'WalletConnect', 'Coinbase Wallet', 'Ledger'] as const;
-const RECOMMENDED_WALLET = SUPPORTED_WALLETS[0];
+const SUPPORTED_WALLETS: readonly { name: string; icon: string }[] = [
+  { name: 'Trust Wallet', icon: trustIcon },
+  { name: 'MetaMask', icon: metamaskIcon },
+  { name: 'WalletConnect', icon: walletConnectIcon },
+  { name: 'Coinbase Wallet', icon: coinbaseIcon },
+  { name: 'Ledger', icon: ledgerIcon },
+];
+const RECOMMENDED_WALLET = SUPPORTED_WALLETS[0].name;
 /** The demo always signs in with a balance that unlocks every model. */
 const DEMO_BALANCE = 0.52;
-const NICKNAME_MIN = 2;
-const NICKNAME_MAX = 20;
+/** Pause before the availability verdict, so the check reads as a lookup. */
+const NICKNAME_CHECK_MS = 600;
 const PROGRESS_STEP_MS = 750;
 const TITLE_ID = 'signup-modal-title';
 
@@ -44,7 +56,21 @@ export function WalletModal() {
   }, [isModalOpen]);
 
   const trimmedName = nickname.trim();
-  const nameValid = trimmedName.length >= NICKNAME_MIN && trimmedName.length <= NICKNAME_MAX;
+  const issue = nicknameIssue(nickname);
+  const [checkedName, setCheckedName] = useState('');
+  const checking = issue !== 'short' && issue !== 'invalid' && checkedName !== trimmedName;
+  const nameValid = issue === null && !checking;
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setCheckedName(trimmedName), NICKNAME_CHECK_MS);
+    return () => window.clearTimeout(timer);
+  }, [trimmedName]);
+
+  let nameStatus: { tone: 'hint' | 'bad' | 'good'; text: string } = { tone: 'hint', text: s.nicknameHint };
+  if (trimmedName && issue === 'invalid') nameStatus = { tone: 'bad', text: s.nickInvalid };
+  else if (trimmedName && issue !== 'short' && checking) nameStatus = { tone: 'hint', text: s.nickChecking };
+  else if (issue === 'taken') nameStatus = { tone: 'bad', text: s.nickTaken };
+  else if (issue === null) nameStatus = { tone: 'good', text: s.nickFree };
   const canSubmit = nameValid && agreed;
 
   useEffect(() => {
@@ -106,16 +132,20 @@ export function WalletModal() {
                 maxLength={NICKNAME_MAX}
                 autoComplete="nickname"
                 aria-describedby={`${nicknameId}-hint`}
+                aria-invalid={nameStatus.tone === 'bad'}
+                className={nameStatus.tone}
               />
-              <small id={`${nicknameId}-hint`}>{s.nicknameHint}</small>
+              <small id={`${nicknameId}-hint`} className={nameStatus.tone} aria-live="polite">
+                {nameStatus.text}
+              </small>
             </label>
 
             <div className="field">
               <span>{s.supported}</span>
               <ul className="sw">
-                {SUPPORTED_WALLETS.map((name) => (
+                {SUPPORTED_WALLETS.map(({ name, icon }) => (
                   <li key={name} className={name === RECOMMENDED_WALLET ? 'rec' : ''}>
-                    <i aria-hidden="true">{name[0]}</i>
+                    <img src={icon} alt="" width={26} height={26} />
                     {name}
                     {name === RECOMMENDED_WALLET && <em>{s.recommendedWallet}</em>}
                   </li>

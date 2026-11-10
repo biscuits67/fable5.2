@@ -41,3 +41,7 @@ npm run preview
 
 Copy `src/i18n/locales/en.ts`, translate it, type it as `Dict`, then register it in `src/i18n/index.tsx`
 (`DICTS` and `LOCALES`). TypeScript reports any missing key.
+
+## Third-party assets
+
+Wallet logos in `src/assets/wallets/` come from the MIT-licensed `@web3icons/core` package. The logos themselves are trademarks of their owners and are used only to name supported wallets.

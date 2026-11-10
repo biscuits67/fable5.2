@@ -83,6 +83,10 @@
 /* Supported wallets list (informational, not a choice). */
 .sw { display: flex; flex-wrap: wrap; gap: 8px; }
 .sw li { display: flex; align-items: center; gap: 8px; padding: 7px 12px 7px 7px; border-radius: 14px; border: 1.5px solid var(--line); font-weight: 700; font-size: 13.5px; }
-.sw i { width: 26px; height: 26px; flex: none; border-radius: 9px; display: grid; place-items: center; font: 800 12px var(--f-mono); font-style: normal; color: #fff; background: linear-gradient(135deg, var(--acc), var(--acc2)); }
+.sw img { width: 26px; height: 26px; flex: none; border-radius: 8px; }
 .sw li.rec { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 12%, transparent); }
 .sw em { padding: 3px 8px; border-radius: 99px; background: var(--acc); color: #fff; font: 800 10.5px var(--f-body); font-style: normal; }
+.field small.bad { color: #ff7a8a; }
+.field small.good { color: var(--ok); }
+.field input.bad { border-color: #ff7a8a; }
+.field input.good { border-color: var(--ok); }
