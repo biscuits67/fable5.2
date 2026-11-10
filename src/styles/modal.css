@@ -57,13 +57,6 @@
 .field input { height: 50px; padding: 0 16px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--bg); color: var(--text); font: 600 15px var(--f-body); transition: border-color 0.25s; }
 .field input:focus { outline: none; border-color: var(--acc); }
 .field input::placeholder { color: var(--mute); }
-.wl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.wl button { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 16px; border: 1.5px solid var(--line); text-align: left; font-weight: 700; font-size: 13.5px; transition: border-color 0.25s, background 0.25s, transform 0.25s var(--bounce); }
-.wl button:hover { transform: translateY(-2px); }
-.wl button.on { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 12%, transparent); }
-.wl i { width: 32px; height: 32px; flex: none; border-radius: 10px; display: grid; place-items: center; font: 800 13px var(--f-mono); font-style: normal; color: #fff; background: linear-gradient(135deg, var(--acc), var(--acc2)); }
-.wl span { display: grid; min-width: 0; line-height: 1.2; }
-.wl small { font: 700 10px var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .chk { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 18px; border: 1.5px solid var(--line); cursor: pointer; font-weight: 600; font-size: 14px; transition: border-color 0.25s; }
 .chk:has(input:checked) { border-color: var(--acc); }
 .chk input { position: absolute; opacity: 0; pointer-events: none; }
@@ -86,3 +79,10 @@
   .su-form { padding: 22px; }
   .mb { place-items: start center; }
 }
+
+/* Supported wallets list (informational, not a choice). */
+.sw { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw li { display: flex; align-items: center; gap: 8px; padding: 7px 12px 7px 7px; border-radius: 14px; border: 1.5px solid var(--line); font-weight: 700; font-size: 13.5px; }
+.sw i { width: 26px; height: 26px; flex: none; border-radius: 9px; display: grid; place-items: center; font: 800 12px var(--f-mono); font-style: normal; color: #fff; background: linear-gradient(135deg, var(--acc), var(--acc2)); }
+.sw li.rec { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 12%, transparent); }
+.sw em { padding: 3px 8px; border-radius: 99px; background: var(--acc); color: #fff; font: 800 10.5px var(--f-body); font-style: normal; }

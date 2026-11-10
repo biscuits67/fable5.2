@@ -8,18 +8,11 @@ import { CheckIcon, EthMark, LockIcon } from './icons';
 import { Modal } from './Modal';
 
 type Step = 'form' | 'progress' | 'result';
-type WalletKind = keyof Dict['signup']['kinds'];
-
-const WALLETS: readonly { name: string; kind: WalletKind }[] = [
-  { name: 'MetaMask', kind: 'browser' },
-  { name: 'WalletConnect', kind: 'mobile' },
-  { name: 'Coinbase Wallet', kind: 'app' },
-  { name: 'Ledger', kind: 'hardware' },
-];
-
-/** Demo balances, one per access level, so every state of the product can be explored. */
-const DEMO_BALANCES = [0.04, 0.14, 0.52] as const;
-const DEFAULT_BALANCE = DEMO_BALANCES[2];
+/** Wallets listed as supported. This demo never talks to any of them. */
+const SUPPORTED_WALLETS = ['Trust Wallet', 'MetaMask', 'WalletConnect', 'Coinbase Wallet', 'Ledger'] as const;
+const RECOMMENDED_WALLET = SUPPORTED_WALLETS[0];
+/** The demo always signs in with a balance that unlocks every model. */
+const DEMO_BALANCE = 0.52;
 const NICKNAME_MIN = 2;
 const NICKNAME_MAX = 20;
 const PROGRESS_STEP_MS = 750;
@@ -39,8 +32,6 @@ export function WalletModal() {
 
   const [step, setStep] = useState<Step>('form');
   const [nickname, setNickname] = useState('');
-  const [walletName, setWalletName] = useState(WALLETS[0].name);
-  const [balance, setBalance] = useState<number>(DEFAULT_BALANCE);
   const [agreed, setAgreed] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -59,13 +50,13 @@ export function WalletModal() {
   useEffect(() => {
     if (step !== 'progress') return;
     if (progress >= s.progress.length) {
-      connect({ nickname: trimmedName, walletName, balance });
+      connect({ nickname: trimmedName, walletName: RECOMMENDED_WALLET, balance: DEMO_BALANCE });
       setStep('result');
       return;
     }
     const timer = window.setTimeout(() => setProgress((p) => p + 1), PROGRESS_STEP_MS);
     return () => window.clearTimeout(timer);
-  }, [step, progress, s.progress.length, connect, trimmedName, walletName, balance]);
+  }, [step, progress, s.progress.length, connect, trimmedName]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -119,38 +110,18 @@ export function WalletModal() {
               <small id={`${nicknameId}-hint`}>{s.nicknameHint}</small>
             </label>
 
-            <fieldset className="field">
-              <legend>{s.wallet}</legend>
-              <div className="wl">
-                {WALLETS.map((wallet) => (
-                  <button
-                    key={wallet.name}
-                    type="button"
-                    className={wallet.name === walletName ? 'on' : ''}
-                    aria-pressed={wallet.name === walletName}
-                    onClick={() => setWalletName(wallet.name)}
-                  >
-                    <i>{wallet.name[0]}</i>
-                    <span>
-                      {wallet.name}
-                      <small>{s.kinds[wallet.kind]}</small>
-                    </span>
-                  </button>
+            <div className="field">
+              <span>{s.supported}</span>
+              <ul className="sw">
+                {SUPPORTED_WALLETS.map((name) => (
+                  <li key={name} className={name === RECOMMENDED_WALLET ? 'rec' : ''}>
+                    <i aria-hidden="true">{name[0]}</i>
+                    {name}
+                    {name === RECOMMENDED_WALLET && <em>{s.recommendedWallet}</em>}
+                  </li>
                 ))}
-              </div>
-            </fieldset>
-
-            <fieldset className="field">
-              <legend>{s.demoBalance}</legend>
-              <div className="seg">
-                {DEMO_BALANCES.map((value) => (
-                  <button key={value} type="button" className={value === balance ? 'on' : ''} aria-pressed={value === balance} onClick={() => setBalance(value)}>
-                    {formatEth(value)} ETH
-                  </button>
-                ))}
-              </div>
-              <small>{s.demoBalanceHint}</small>
-            </fieldset>
+              </ul>
+            </div>
 
             <label className="chk">
               <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />

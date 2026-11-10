@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { AGENT_START_BALANCE, AGENT_TARGET_BALANCE, agentSnapshot, formatPercent } from '../../data/agentRun';
+import { AGENT_START_BALANCE, AGENT_TARGET_BALANCE, agentSnapshot, formatPercent, formatSignedEth } from '../../data/agentRun';
 import { MODELS, accessTier, formatEth, isUnlocked } from '../../data/models';
 import { useI18n } from '../../i18n';
 import type { Dict } from '../../i18n/locales/en';
@@ -170,6 +170,10 @@ export function InfoPanel({ ws }: { ws: Workspace }) {
             <div className="kv">
               <span>{t.ws.result}</span>
               <b className={change >= 0 ? 'up' : 'down'}>{formatPercent(change)}</b>
+            </div>
+            <div className="kv">
+              <span>{t.ws.earned}</span>
+              <b className={change >= 0 ? 'up' : 'down'}>{formatSignedEth(snapshot.balance - AGENT_START_BALANCE)}</b>
             </div>
             <div className="kv">
               <span>{t.agent.target}</span>
