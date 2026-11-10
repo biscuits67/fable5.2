@@ -58,6 +58,7 @@ h1, h2, h3 { overflow-wrap: break-word; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rv.in { animation: none; }
+  .strip-track { animation: none; }
 }
 
 /* Segmented choice, used in the sign-up dialog and the agent's confirmation step. */

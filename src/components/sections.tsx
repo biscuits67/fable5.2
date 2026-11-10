@@ -350,6 +350,15 @@ export function CtaSection() {
   );
 }
 
+/** The strip repeats the wallet list so the loop can slide by exactly half its width without a visible seam. */
+const STRIP_COPIES = [0, 1, 2, 3, 4, 5, 6, 7];
+/** Large faded logos behind the footer; `index` points into SUPPORTED_WALLETS. */
+const WATERMARKS = [
+  { index: 0, className: 'wm1' },
+  { index: 1, className: 'wm2' },
+  { index: 4, className: 'wm3' },
+];
+
 export function Footer() {
   const { t, locale, setLocale } = useI18n();
   const links = [
@@ -363,6 +372,21 @@ export function Footer() {
 
   return (
     <footer className="foot">
+      <div className="strip" aria-hidden="true">
+        <div className="strip-track">
+          {STRIP_COPIES.map((copy) =>
+            SUPPORTED_WALLETS.map(({ name, icon }) => (
+              <span key={`${copy}-${name}`}>
+                <img src={icon} alt="" width={40} height={40} loading="lazy" />
+                {name}
+              </span>
+            )),
+          )}
+        </div>
+      </div>
+      {WATERMARKS.map(({ index, className }) => (
+        <img key={className} className={`foot-wm ${className}`} src={SUPPORTED_WALLETS[index].icon} alt="" aria-hidden="true" loading="lazy" />
+      ))}
       <div className="wrap foot-grid">
         <div className="foot-brand">
           <div className="logo d">
