@@ -13,7 +13,7 @@ const TITLE_ID = 'signup-modal-title';
 
 /**
  * Sign-up dialog: access tiers, nickname, supported wallets and a confirmation.
- * Submitting only closes it. No account is created and no wallet is contacted.
+ * Submitting keeps it open. No account is created and no wallet is contacted.
  */
 export function WalletModal() {
   const { t } = useI18n();
@@ -47,7 +47,6 @@ export function WalletModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (canSubmit) closeModal();
   };
 
   return (

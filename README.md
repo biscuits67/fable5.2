@@ -45,7 +45,7 @@ After deploying, add the site in Google Search Console and submit `/sitemap.xml`
 | `src/pages/Landing.tsx` | Landing page sections |
 | `src/data/agentRun.ts` | Scripted, deliberately modest trading-agent simulation |
 | `src/components/demo/` | Laptop mockup and the scripted demo player |
-| `src/components/WalletModal.tsx` | Sign-up dialog: access tiers, nickname check, supported wallets, confirmation. Submitting only closes it |
+| `src/components/WalletModal.tsx` | Sign-up dialog: access tiers, nickname check, supported wallets, confirmation. Submitting keeps it open |
 | `src/components/AgentRunCard.tsx` | Card showing the scripted trading run |
 | `src/data/models.ts` | The four models and balance thresholds (0.1 / 0.5 ETH) |
 | `src/i18n/locales/` | Translations: en, es, it, fr, de, pt |
