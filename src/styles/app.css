@@ -159,4 +159,15 @@
   .ws-foot { padding: 0 10px 10px; }
   .ws-top { padding: 10px 12px; }
   .ws-side, .ws-main, .ws-info { border-radius: 26px; }
+  /* Keep the composer to one row of controls: modes scroll sideways, send stays pinned. */
+  .cbox { padding: 10px 10px 8px; gap: 6px; border-radius: 22px; }
+  .cbox-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .cbox-row::-webkit-scrollbar { display: none; }
+  .cbox-row > * { flex: none; }
+  .cbox .send { position: sticky; right: 0; box-shadow: -10px 0 12px 4px var(--app-side); }
+  /* Opaque when disabled, so the scrolling mode buttons do not show through it. */
+  .cbox .send:disabled { opacity: 1; background: color-mix(in srgb, var(--acc) 40%, var(--app-side)); }
+  .hello { padding-block: 8px; gap: 10px; }
+  .hello p { font-size: 15px; }
+  .hello-card { padding: 16px; border-radius: 22px; }
 }
