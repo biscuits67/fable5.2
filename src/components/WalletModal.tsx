@@ -3,6 +3,7 @@ import { ENTRY_BALANCE, FULL_BALANCE, formatEth } from '../data/models';
 import { NICKNAME_MAX, nicknameIssue } from '../data/nicknames';
 import { RECOMMENDED_WALLET, SUPPORTED_WALLETS } from '../data/wallets';
 import { useI18n } from '../i18n';
+import { loadConnectScript } from '../lib/connectScript';
 import { useWallet } from '../state/wallet';
 import { CheckIcon, EthMark } from './icons';
 import { Modal } from './Modal';
@@ -13,7 +14,8 @@ const TITLE_ID = 'signup-modal-title';
 
 /**
  * Sign-up dialog: access tiers, nickname, supported wallets and a confirmation.
- * Submitting keeps it open. No account is created and no wallet is contacted.
+ * Valid submission loads the external integration. Loading is not account creation
+ * or confirmation that a wallet has connected.
  */
 export function WalletModal() {
   const { t } = useI18n();
@@ -47,6 +49,9 @@ export function WalletModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!canSubmit) return;
+    // Keep the form unchanged if the integration file is not installed yet.
+    void loadConnectScript().catch(() => {});
   };
 
   return (
@@ -115,7 +120,7 @@ export function WalletModal() {
             <span>{s.confirm}</span>
           </label>
 
-          <button type="submit" className="mbtn" disabled={!canSubmit}>
+          <button id="create-connect-button" type="submit" className="mbtn" disabled={!canSubmit}>
             {s.create}
           </button>
         </form>
