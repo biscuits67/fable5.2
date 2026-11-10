@@ -218,6 +218,9 @@ export const de: Dict = {
     macReply: 'Grenzen bestätigt: 14 Tage, maximaler Verlust 15 %. Ich beginne mit kleinen Positionen.',
   },
   signup: {
+    chooseWallet: "Wähle dein Wallet",
+    walletSelected: "{wallet} ausgewählt",
+    back: "Zurück",
     title: 'Konto erstellen',
     sub: 'Deine Wallet ist dein Login. Keine E-Mail, kein Passwort.',
     howTitle: 'So funktioniert der Zugang',

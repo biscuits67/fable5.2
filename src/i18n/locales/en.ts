@@ -227,6 +227,9 @@ export const en = {
     macReply: 'Limits confirmed: 14 days, maximum loss 15%. Starting with small positions.',
   },
   signup: {
+    chooseWallet: "Choose your wallet",
+    walletSelected: "{wallet} selected",
+    back: "Back",
     title: 'Create your account',
     sub: 'Your wallet is your login. No email and no password.',
     howTitle: 'How access works',

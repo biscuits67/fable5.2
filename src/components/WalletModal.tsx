@@ -1,8 +1,8 @@
-import { useEffect, useId, useState, type FormEvent } from 'react';
+import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { ENTRY_BALANCE, FULL_BALANCE, formatEth } from '../data/models';
 import { NICKNAME_MAX, nicknameIssue } from '../data/nicknames';
 import { RECOMMENDED_WALLET, SUPPORTED_WALLETS } from '../data/wallets';
-import { useI18n } from '../i18n';
+import { fmt, useI18n } from '../i18n';
 import { useWallet } from '../state/wallet';
 import { CheckIcon, EthMark } from './icons';
 import { Modal } from './Modal';
@@ -13,13 +13,17 @@ const TITLE_ID = 'signup-modal-title';
 
 /**
  * Sign-up dialog: access tiers, nickname, supported wallets and a confirmation.
- * Submitting keeps it open. No account is created and no wallet is contacted.
+ * Valid submission opens wallet selection. Selection does not connect a wallet.
  */
 export function WalletModal() {
   const { t } = useI18n();
   const s = t.signup;
   const { isModalOpen, closeModal } = useWallet();
   const nicknameId = useId();
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const walletTitleRef = useRef<HTMLHeadingElement>(null);
+  const [step, setStep] = useState<'signup' | 'wallet'>('signup');
+  const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
 
   const [nickname, setNickname] = useState('');
   const [agreed, setAgreed] = useState(false);
@@ -27,7 +31,17 @@ export function WalletModal() {
 
   useEffect(() => {
     if (isModalOpen) setAgreed(false);
+    else {
+      setStep('signup');
+      setSelectedWallet(null);
+    }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    if (step === 'wallet') walletTitleRef.current?.focus();
+    else nicknameRef.current?.focus();
+  }, [isModalOpen, step]);
 
   const trimmedName = nickname.trim();
   const issue = nicknameIssue(nickname);
@@ -47,6 +61,7 @@ export function WalletModal() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (canSubmit) setStep('wallet');
   };
 
   return (
@@ -72,6 +87,7 @@ export function WalletModal() {
           <p>{s.notPayment}</p>
         </aside>
 
+        {step === 'signup' ? (
         <form className="su-form" onSubmit={handleSubmit} noValidate>
           <h3 id={TITLE_ID}>{s.title}</h3>
           <p className="ms">{s.sub}</p>
@@ -80,6 +96,7 @@ export function WalletModal() {
             <span>{s.nickname}</span>
             <input
               id={nicknameId}
+              ref={nicknameRef}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               placeholder={s.nicknamePlaceholder}
@@ -119,6 +136,33 @@ export function WalletModal() {
             {s.create}
           </button>
         </form>
+        ) : (
+          <div className="su-form">
+            <h3 id={TITLE_ID} ref={walletTitleRef} tabIndex={-1}>{s.chooseWallet}</h3>
+            <ul className="mm-list">
+              {SUPPORTED_WALLETS.map(({ name, icon }) => (
+                <li key={name}>
+                  <button
+                    type="button"
+                    className="mbtn"
+                    aria-pressed={selectedWallet === name}
+                    onClick={() => setSelectedWallet(name)}
+                  >
+                    <img src={icon} alt="" width={26} height={26} />{' '}
+                    {name}
+                    {selectedWallet === name && <CheckIcon size={16} />}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <p className="ms" role="status">
+              {selectedWallet ? fmt(s.walletSelected, { wallet: selectedWallet }) : s.supported}
+            </p>
+            <button type="button" className="mbtn" onClick={() => setStep('signup')}>
+              {s.back}
+            </button>
+          </div>
+        )}
       </div>
     </Modal>
   );
