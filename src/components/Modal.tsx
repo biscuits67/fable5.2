@@ -7,11 +7,13 @@ interface ModalProps {
   open: boolean;
   onClose: () => void;
   labelledBy: string;
+  /** Wider two-column layout without the default padding. */
+  wide?: boolean;
   children: ReactNode;
 }
 
 /** Accessible dialog shell: Escape and backdrop close it, focus moves in and is restored on close. */
-export function Modal({ open, onClose, labelledBy, children }: ModalProps) {
+export function Modal({ open, onClose, labelledBy, wide = false, children }: ModalProps) {
   const { t } = useI18n();
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -39,8 +41,8 @@ export function Modal({ open, onClose, labelledBy, children }: ModalProps) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="md" role="dialog" aria-modal="true" aria-labelledby={labelledBy} tabIndex={-1} ref={dialogRef}>
-        <button type="button" className="mx" onClick={onClose} aria-label={t.wallet.close}>
+      <div className={`md ${wide ? 'md-wide' : ''}`} role="dialog" aria-modal="true" aria-labelledby={labelledBy} tabIndex={-1} ref={dialogRef}>
+        <button type="button" className="mx" onClick={onClose} aria-label={t.signup.close}>
           <CloseIcon />
         </button>
         {children}

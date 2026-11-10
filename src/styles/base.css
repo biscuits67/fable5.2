@@ -59,3 +59,11 @@ h1, h2, h3 { overflow-wrap: break-word; }
   html { scroll-behavior: auto; }
   .rv.in { animation: none; }
 }
+
+/* Segmented choice, used in the sign-up dialog and the agent's confirmation step. */
+.seg { display: flex; gap: 6px; padding: 5px; border-radius: 16px; background: color-mix(in srgb, var(--acc) 10%, transparent); }
+.seg button { flex: 1; padding: 10px 8px; border-radius: 12px; font-weight: 800; font-size: 13.5px; white-space: nowrap; transition: background 0.25s, color 0.25s, transform 0.2s; }
+.seg button:hover:not(.on) { background: color-mix(in srgb, var(--acc) 14%, transparent); }
+.seg button.on { background: var(--acc); color: #fff; box-shadow: 0 4px 0 var(--acc-deep); }
+.up { color: var(--ok); }
+.down { color: #ff7a8a; }

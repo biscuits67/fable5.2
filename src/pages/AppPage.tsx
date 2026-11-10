@@ -1,304 +1,147 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
-import { ModelIcon, LockIcon, SendIcon } from '../components/icons';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AgentConfirm, AgentRunCard, CodeCard, PlanCard, ThinkingBlock } from '../components/app/ChatBlocks';
+import { Composer } from '../components/app/Composer';
+import { InfoPanel, Sidebar } from '../components/app/Panels';
+import type { Message } from '../components/app/types';
+import { SCENARIO_BY_MODEL } from '../components/app/types';
+import { useWorkspace, type Workspace } from '../components/app/useWorkspace';
+import { LockIcon, ModelIcon } from '../components/icons';
 import { Modal } from '../components/Modal';
-import { BURN_TOKEN_FILE, BURN_TOKEN_SOURCE } from '../data/contract';
-import { MODELS, accessTier, formatEth, getModel, isUnlocked, type ModelId, type ModelSpec } from '../data/models';
+import { AGENT_PROMPT } from '../data/agentRun';
+import { FULL_BALANCE, formatEth, getModel, isUnlocked, type ModelSpec } from '../data/models';
 import { fmt, useI18n } from '../i18n';
-import type { Dict } from '../i18n/locales/en';
-import { highlightSolidity } from '../lib/highlight';
-import { DEMO_ADDRESS, useWallet } from '../state/wallet';
+import { useWallet } from '../state/wallet';
 
-interface Message {
-  id: number;
-  role: 'user' | 'ai';
-  text: string;
-  pending?: boolean;
-  code?: boolean;
-  plan?: string[][];
-}
-
-interface ScriptedReply {
-  prompt: string;
-  reply: string;
-  code?: boolean;
-  plan?: string[][];
-}
-
-const THINKING_MS = 900;
-const STREAM_INTERVAL_MS = 16;
-const STREAM_CHUNK = 3;
 const LOCKED_TITLE_ID = 'locked-modal-title';
+type Drawer = 'side' | 'info' | null;
 
-function scriptedReply(t: Dict, id: ModelId): ScriptedReply {
-  const s = t.scenarios;
-  switch (id) {
-    case 'lumen':
-      return s.ask;
-    case 'vector':
-      return { ...s.plan, plan: s.plan.rows };
-    case 'forge':
-      return { ...s.code, code: true };
-    case 'apex':
-      return s.apex;
-  }
-}
-
-function tierLabel(t: Dict, balance: number): string {
-  const tier = accessTier(balance);
-  if (tier === 'full') return t.app.allUnlocked;
-  return tier === 'entry' ? t.app.lumenOnly : t.app.noneUnlocked;
-}
-
-function PlanCard({ rows, label }: { rows: string[][]; label: string }) {
+function AiMessage({ message, ws }: { message: Message; ws: Workspace }) {
+  const block = message.block;
   return (
-    <div className="plan">
-      <ul>
-        {rows.map(([key, value], index) => (
-          <li key={key} style={{ animationDelay: `${index * 180}ms` }}>
-            <small>{key}</small>
-            <b>{value}</b>
-          </li>
-        ))}
-      </ul>
-      <div className="chart">
-        <small>{label}</small>
-        <svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
-          <path className="l" d="M4 70C30 50 44 92 70 84S104 30 130 44s30 58 56 50 34-62 60-58 30 26 50 8" />
-          <circle cx="70" cy="84" r="5" style={{ animationDelay: '.7s' }} />
-          <circle cx="186" cy="94" r="7" style={{ animationDelay: '1.3s' }} />
-          <circle cx="246" cy="36" r="5" style={{ animationDelay: '1.7s' }} />
-        </svg>
-      </div>
+    <div className="turn">
+      {message.thinking && <ThinkingBlock thinking={message.thinking} />}
+      {message.text && <div className="msg a">{message.text}</div>}
+      {block?.kind === 'code' && <CodeCard />}
+      {block?.kind === 'plan' && <PlanCard rows={block.rows} />}
+      {block?.kind === 'confirm' && (
+        <AgentConfirm chosen={block.chosen} disabled={ws.busy} onConfirm={(days, loss) => ws.confirmAgent(message.id, days, loss)} />
+      )}
+      {block?.kind === 'run' && <AgentRunCard step={block.step} done={block.done} loss={block.loss} />}
     </div>
   );
 }
 
-function CodeCard() {
-  return (
-    <div className="code">
-      <header>
-        <i />
-        <i />
-        <i />
-        <span>{BURN_TOKEN_FILE}</span>
-      </header>
-      {/* Source is a local constant and is HTML-escaped by the highlighter. */}
-      <pre dangerouslySetInnerHTML={{ __html: highlightSolidity(BURN_TOKEN_SOURCE) }} />
-    </div>
-  );
-}
-
-/** Interactive demo workspace. Answers are scripted; nothing is sent anywhere. */
+/** Demo workspace. Answers, market data and trades are scripted; nothing is sent anywhere. */
 export function AppPage() {
   const { t } = useI18n();
   const { account, openModal } = useWallet();
   const balance = account?.balance ?? null;
 
-  const [selectedId, setSelectedId] = useState<ModelId | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [draft, setDraft] = useState('');
-  const [busy, setBusy] = useState(false);
   const [lockedModel, setLockedModel] = useState<ModelSpec | null>(null);
   const [lockedOpen, setLockedOpen] = useState(false);
-
-  const nextId = useRef(1);
-  const timers = useRef<number[]>([]);
+  const [drawer, setDrawer] = useState<Drawer>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
-  const clearTimers = useCallback(() => {
-    timers.current.forEach((id) => {
-      window.clearTimeout(id);
-      window.clearInterval(id);
-    });
-    timers.current = [];
+  const showLocked = useCallback((model: ModelSpec) => {
+    setLockedModel(model);
+    setLockedOpen(true);
   }, []);
+  const closeLocked = useCallback(() => setLockedOpen(false), []);
+  const closeDrawer = useCallback(() => setDrawer(null), []);
 
-  const resetChat = useCallback(() => {
-    clearTimers();
-    setMessages([]);
-    setBusy(false);
-  }, [clearTimers]);
-
-  useEffect(() => clearTimers, [clearTimers]);
-
-  // Keep the selection valid when the wallet changes: pick the best unlocked model, or none.
-  useEffect(() => {
-    const current = selectedId ? getModel(selectedId) : null;
-    if (current && isUnlocked(current, balance)) return;
-    const fallback = MODELS.find((model) => isUnlocked(model, balance)) ?? null;
-    setSelectedId(fallback?.id ?? null);
-    resetChat();
-  }, [balance, selectedId, resetChat]);
+  const ws = useWorkspace(t, balance, showLocked);
+  const model = getModel(ws.active.modelId);
+  const usable = isUnlocked(model, balance);
+  const agentAvailable = balance !== null && balance >= FULL_BALANCE;
+  const messages = ws.active.messages;
 
   useEffect(() => {
     const node = chatRef.current;
     if (node) node.scrollTop = node.scrollHeight;
   }, [messages]);
 
-  const closeLocked = useCallback(() => setLockedOpen(false), []);
-  const selected = selectedId ? getModel(selectedId) : null;
-  const script = selected ? scriptedReply(t, selected.id) : null;
-
-  const pickModel = (model: ModelSpec) => {
-    if (!isUnlocked(model, balance)) {
-      setLockedModel(model);
-      setLockedOpen(true);
-      return;
-    }
-    if (model.id === selectedId) return;
-    setSelectedId(model.id);
-    resetChat();
-  };
-
-  const send = (prompt: string, reply: Omit<ScriptedReply, 'prompt'>) => {
-    if (busy || !selected) return;
-    const userId = nextId.current++;
-    const aiId = nextId.current++;
-    setBusy(true);
-    setMessages((list) => [...list, { id: userId, role: 'user', text: prompt }, { id: aiId, role: 'ai', text: '', pending: true }]);
-
-    const patch = (changes: Partial<Message>) => setMessages((list) => list.map((m) => (m.id === aiId ? { ...m, ...changes } : m)));
-
-    const thinking = window.setTimeout(() => {
-      let shown = 0;
-      const stream = window.setInterval(() => {
-        shown = Math.min(shown + STREAM_CHUNK, reply.reply.length);
-        patch({ text: reply.reply.slice(0, shown), pending: false });
-        if (shown < reply.reply.length) return;
-        window.clearInterval(stream);
-        patch({ code: reply.code, plan: reply.plan });
-        setBusy(false);
-      }, STREAM_INTERVAL_MS);
-      timers.current.push(stream);
-    }, THINKING_MS);
-    timers.current.push(thinking);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const prompt = draft.trim();
-    if (!prompt || !selected) return;
-    setDraft('');
-    send(prompt, { reply: fmt(t.app.demoReply, { model: selected.name }) });
-  };
-
-  const emptyText = !account ? t.app.connectFirst : selected ? t.app.pickAndAsk : t.app.noneUnlocked;
+  const suggestion = t.scenarios[SCENARIO_BY_MODEL[model.id]].prompt;
+  const greeting = account ? fmt(t.ws.greeting, { name: account.nickname }) : t.ws.guest;
 
   return (
-    <main className="ap wrap">
-      <aside className="ap-side">
-        <div className="a-lab">{t.app.models}</div>
-        <div className="ap-models">
-          {MODELS.map((model) => {
-            const open = isUnlocked(model, balance);
-            return (
-              <button
-                key={model.id}
-                type="button"
-                className={`m ${open ? 'open' : ''} ${model.id === selectedId ? 'sel' : ''}`}
-                aria-pressed={model.id === selectedId}
-                onClick={() => pickModel(model)}
-              >
-                <span className="m-ic" style={{ '--mc': model.color } as CSSProperties}>
-                  <ModelIcon id={model.id} />
-                </span>
-                <span className="m-tx">
-                  <b>{model.name}</b>
-                  <small>{t.models.items[model.id].role}</small>
-                </span>
-                <em>
-                  {open ? (
-                    t.app.unlocked
-                  ) : (
-                    <>
-                      <LockIcon size={10} /> {formatEth(model.minBalance, 1)} ETH
-                    </>
-                  )}
-                </em>
-              </button>
-            );
-          })}
-        </div>
-        <div className="a-wallet">
-          {account ? (
-            <div className="ap-acct">
-              <small>
-                {DEMO_ADDRESS} · {t.app.readOnly}
-              </small>
-              <b className="d">{formatEth(account.balance, 3)} ETH</b>
-              <em>{tierLabel(t, account.balance)}</em>
-              <button type="button" className="ap-change" onClick={openModal}>
-                {t.app.changeWallet}
-              </button>
-            </div>
-          ) : (
-            <button type="button" className="btn btn-p ap-connect" onClick={openModal}>
-              {t.nav.connect}
-            </button>
-          )}
-        </div>
-      </aside>
+    <main className={`ws ${drawer ? `show-${drawer}` : ''}`}>
+      <Sidebar ws={ws} onNavigate={closeDrawer} />
 
-      <div className="ap-main">
-        <header className="a-top">
-          <b className="d">{selected ? selected.name : t.app.selectModel}</b>
-          <span>{t.app.demoBadge}</span>
+      <div className="ws-main">
+        <header className="ws-top">
+          <button type="button" className="ws-tog" aria-label={t.ws.menu} onClick={() => setDrawer(drawer === 'side' ? null : 'side')}>
+            <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true">
+              <path d="M1 1h16M1 7h16M1 13h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          <span className="m-ic" style={{ ['--mc' as string]: model.color }}>
+            <ModelIcon id={model.id} />
+          </span>
+          <div className="ws-title">
+            <b className="d">{model.name}</b>
+            <small>{t.models.items[model.id].role}</small>
+          </div>
+          <span className="ws-badge">{t.app.demoBadge}</span>
+          <button type="button" className="ws-tog ws-tog-info" aria-label={t.ws.panel} onClick={() => setDrawer(drawer === 'info' ? null : 'info')}>
+            <svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true">
+              <path d="M1 15V9M6 15V1M11 15V6M16 15v-4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+          </button>
         </header>
 
-        <div className="ap-chat" ref={chatRef} aria-live="polite">
-          {messages.length === 0 && (
-            <div className="empty">
-              <p>{emptyText}</p>
-              {script && (
-                <>
-                  <small>{t.app.suggestions}</small>
-                  <button type="button" className="chip" onClick={() => send(script.prompt, script)}>
-                    {script.prompt}
+        <div className="ws-chat" ref={chatRef}>
+          <div className="ws-col">
+            {messages.length === 0 ? (
+              <div className="hello">
+                <h1 className="d">{greeting}</h1>
+                <p>{usable ? t.app.pickAndAsk : account ? t.app.noneUnlocked : t.app.connectFirst}</p>
+                <div className="hello-grid">
+                  <button type="button" className="hello-card agent" onClick={() => ws.startAgent(AGENT_PROMPT)}>
+                    <small>{t.ws.modeAgent}</small>
+                    <b>{t.agent.card}</b>
+                    <span>{t.agent.cardSub}</span>
                   </button>
-                </>
-              )}
-            </div>
-          )}
-          {messages.map((message) =>
-            message.role === 'user' ? (
-              <div key={message.id} className="msg u">
-                {message.text}
+                  <button type="button" className="hello-card" onClick={() => ws.send(suggestion)}>
+                    <small>{t.app.suggestions}</small>
+                    <b>{suggestion}</b>
+                  </button>
+                </div>
               </div>
             ) : (
-              <div key={message.id} className="ap-turn">
-                <div className="msg a">
-                  {message.pending ? (
-                    <span className="dots">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
-                  ) : (
-                    message.text
-                  )}
-                </div>
-                {message.code && <CodeCard />}
-                {message.plan && <PlanCard rows={message.plan} label={t.app.planChart} />}
-              </div>
-            ),
-          )}
+              messages.map((message) =>
+                message.role === 'user' ? (
+                  <div key={message.id} className="msg u">
+                    {message.text}
+                    {message.files && (
+                      <ul className="msg-files">
+                        {message.files.map((name) => (
+                          <li key={name}>{name}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  <AiMessage key={message.id} message={message} ws={ws} />
+                ),
+              )
+            )}
+          </div>
         </div>
 
-        <form className="a-in" onSubmit={handleSubmit}>
-          <input
-            className="ap-input"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            placeholder={t.app.placeholder}
-            aria-label={t.app.placeholder}
-            disabled={!selected}
-            maxLength={500}
+        <div className="ws-col ws-foot">
+          <Composer
+            busy={ws.busy}
+            modes={ws.modes}
+            agentAvailable={agentAvailable}
+            onToggleMode={ws.toggleMode}
+            onAgentLocked={() => showLocked(getModel('vector'))}
+            onSend={ws.send}
           />
-          <button type="submit" className="send" aria-label={t.app.send} disabled={!selected || busy || !draft.trim()}>
-            <SendIcon />
-          </button>
-        </form>
+        </div>
       </div>
+
+      <InfoPanel ws={ws} />
+      <button type="button" className="ws-scrim" aria-label={t.signup.close} tabIndex={drawer ? 0 : -1} onClick={closeDrawer} />
 
       <Modal open={lockedOpen} onClose={closeLocked} labelledBy={LOCKED_TITLE_ID}>
         {lockedModel && (

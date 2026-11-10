@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { ModelModal } from '../components/ModelModal';
-import { AccessSection, CompareSection, CtaSection, DemoSection, FaqSection, Hero, ModelsSection } from '../components/sections';
+import { AccessSection, AgentSection, CompareSection, CtaSection, DemoSection, FaqSection, Hero, ModelsSection } from '../components/sections';
 import type { ModelSpec } from '../data/models';
 
 export function Landing() {
@@ -19,6 +19,7 @@ export function Landing() {
       <DemoSection />
       <ModelsSection onSelect={showModel} />
       <CompareSection />
+      <AgentSection />
       <AccessSection />
       <FaqSection />
       <CtaSection />

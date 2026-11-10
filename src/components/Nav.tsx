@@ -61,7 +61,7 @@ export function Nav({ route }: { route: Route }) {
   const { account, openModal } = useWallet();
 
   return (
-    <nav className="nav">
+    <nav className={`nav ${route === 'app' ? 'wide' : ''}`}>
       <a className="logo d" href={HOME_HASH} aria-label="Ethereum AI">
         <EthMark className="eth" />
         <span>ETHEREUM AI</span>

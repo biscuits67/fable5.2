@@ -8,10 +8,18 @@ import { createDemoPlayer, type DemoPlayer, type DemoScenario } from './player';
 
 function buildScenarios(t: Dict): DemoScenario[] {
   const { code, plan, ask } = t.scenarios;
+  const a = t.agent;
   return [
     { model: 'forge', balance: 0.52, prompt: code.prompt, reply: code.reply, code: { file: BURN_TOKEN_FILE, source: BURN_TOKEN_SOURCE } },
     { model: 'vector', balance: 1.284, prompt: plan.prompt, reply: plan.reply, plan: { rows: plan.rows, chartLabel: t.app.planChart } },
     { model: 'lumen', balance: 0.14, prompt: ask.prompt, reply: ask.reply },
+    {
+      model: 'vector',
+      balance: 0.52,
+      prompt: a.macPrompt,
+      reply: a.macReply,
+      agent: { running: a.running, done: a.done, day: a.day, balance: a.balance, result: a.result, note: a.simNote, events: a.events },
+    },
   ];
 }
 
@@ -121,7 +129,7 @@ export function DemoShowcase() {
     return () => player.destroy();
   }, [scenarios, t]);
 
-  const tabs = [t.demo.tabCode, t.demo.tabPlan, t.demo.tabAsk];
+  const tabs = [t.demo.tabCode, t.demo.tabPlan, t.demo.tabAsk, t.agent.tab];
   return (
     <div className="demo" ref={rootRef}>
       <MacScreen t={t} />

@@ -1,7 +1,10 @@
 import { useState, type CSSProperties } from 'react';
 import { FULL_BALANCE, ENTRY_BALANCE, MODELS, formatEth, type ModelSpec } from '../data/models';
 import { fmt, useI18n } from '../i18n';
+import { APP_HASH, navigate } from '../lib/route';
 import { useWallet } from '../state/wallet';
+import { AgentRunCard } from './app/ChatBlocks';
+import { AGENT_EVENTS } from '../data/agentRun';
 import { DemoShowcase } from './demo/DemoShowcase';
 import { EthMark, ModelIcon } from './icons';
 import { Ball, Coin, Gem } from './Objects';
@@ -192,6 +195,54 @@ export function CompareSection() {
             </tr>
           </tbody>
         </table>
+      </Reveal>
+    </section>
+  );
+}
+
+const AGENT_PREVIEW_LOSS = 15;
+
+export function AgentSection() {
+  const { t } = useI18n();
+  const { account, openModal } = useWallet();
+  const a = t.agent;
+  const canOpen = account !== null && account.balance >= FULL_BALANCE;
+
+  return (
+    <section id="agent" className="wrap">
+      <Reveal className="agent">
+        <div className="agent-tx">
+          <h2 className="d">
+            {a.sectionTitle1}
+            <br />
+            <em>{a.sectionTitle2}</em>
+          </h2>
+          <p className="agent-lead">{a.sectionLead}</p>
+          <ul className="agent-points">
+            {a.points.map(([title, text], index) => (
+              <li key={title}>
+                <b>{index + 1}</b>
+                <div>
+                  <strong>{title}</strong>
+                  <span>{text}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="agent-rec">
+            <b className="d">{formatEth(FULL_BALANCE, 1)} ETH</b>
+            <div>
+              <strong>{a.rec}</strong>
+              <span>{a.recNote}</span>
+            </div>
+          </div>
+          <button type="button" className="btn btn-p" onClick={() => (canOpen ? navigate(APP_HASH) : openModal())}>
+            {a.cta}
+          </button>
+        </div>
+        <div className="agent-vis">
+          <AgentRunCard step={AGENT_EVENTS.length} done loss={AGENT_PREVIEW_LOSS} maxLog={5} />
+        </div>
       </Reveal>
     </section>
   );

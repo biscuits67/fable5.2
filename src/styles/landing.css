@@ -154,3 +154,25 @@ main > section { padding-block: 110px 0; }
   .qa-a p { padding: 0 20px 22px; }
   .cmp { border-radius: 28px; }
 }
+
+/* Trading agent section */
+.nav.wide { max-width: none; margin-inline: 16px; }
+.agent { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 56px; border-radius: 56px; background: var(--card); border: 1.5px solid var(--line); }
+.agent h2 { font-size: calc(clamp(28px, 4.2vw, 56px) * var(--dk)); }
+.agent h2 em { font-style: normal; color: var(--acc); }
+.agent-lead { margin: 22px 0 26px; color: var(--mute); font-weight: 600; font-size: 17px; max-width: 460px; }
+.agent-points { display: grid; gap: 14px; margin-bottom: 26px; }
+.agent-points li { display: flex; gap: 14px; }
+.agent-points b { width: 32px; height: 32px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--acc); color: #fff; font-weight: 800; }
+.agent-points strong, .agent-rec strong { display: block; font-weight: 800; }
+.agent-points span, .agent-rec span { color: var(--mute); font-weight: 600; font-size: 14.5px; }
+.agent-rec { display: flex; align-items: center; gap: 18px; padding: 18px 20px; margin-bottom: 26px; border-radius: 26px; background: linear-gradient(160deg, var(--violet), #3a2fd0); color: #fff; }
+.agent-rec b { font-size: calc(30px * var(--dk)); white-space: nowrap; }
+.agent-rec span { color: rgba(255, 255, 255, 0.8); }
+.agent-vis { min-width: 0; padding: 14px; border-radius: 34px; background: var(--app-side); border: 1.5px solid var(--app-line); rotate: 1.5deg; transition: rotate 0.5s var(--bounce); }
+.agent:hover .agent-vis { rotate: 0deg; }
+@media (max-width: 960px) {
+  .agent { grid-template-columns: 1fr; padding: 30px 22px; border-radius: 36px; }
+  .agent-vis { rotate: 0deg; padding: 8px; border-radius: 28px; }
+  .agent-rec { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

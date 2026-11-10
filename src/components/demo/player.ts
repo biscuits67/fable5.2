@@ -1,4 +1,5 @@
 import { escapeHtml, highlightSolidity } from '../../lib/highlight';
+import { AGENT_EVENTS, AGENT_SIMULATED_DAYS, AGENT_START_BALANCE, agentSnapshot, baselineY, equityPoints, formatPercent } from '../../data/agentRun';
 import type { ModelId } from '../../data/models';
 
 export interface DemoScenario {
@@ -8,6 +9,18 @@ export interface DemoScenario {
   reply: string;
   code?: { file: string; source: string };
   plan?: { rows: string[][]; chartLabel: string };
+  agent?: DemoAgentCopy;
+}
+
+/** Labels for the trading-agent card. `day` contains an `{n}` placeholder. */
+export interface DemoAgentCopy {
+  running: string;
+  done: string;
+  day: string;
+  balance: string;
+  result: string;
+  note: string;
+  events: string[];
 }
 
 export interface DemoLabels {
@@ -27,6 +40,9 @@ export interface DemoPlayer {
 /** The mock app is drawn on a fixed 1000×625 canvas and scaled to the laptop screen. */
 const CANVAS_WIDTH = 1000;
 const FULL_ACCESS_BALANCE = 0.5;
+const AGENT_CHART = { width: 300, height: 60 };
+const AGENT_STEP_MS = 520;
+const AGENT_LOG_LINES = 3;
 
 class Cancelled extends Error {}
 
@@ -195,6 +211,42 @@ export function createDemoPlayer(
         .join('');
       append(`<ul>${rows}</ul><div class="chart"><small>${escapeHtml(scenario.plan.chartLabel)}</small>${CHART_SVG}</div>`, 'plan');
     }
+
+    if (scenario.agent) await runAgent(scenario.agent, id);
+  };
+
+  const runAgent = async (copy: DemoAgentCopy, id: number) => {
+    const { width, height } = AGENT_CHART;
+    const y = baselineY(height);
+    const card = append(
+      `<header><i class="pulse"></i><b>${escapeHtml(copy.running)}</b><span></span></header>` +
+        `<div class="arun-stats"><div><small>${escapeHtml(copy.balance)}</small><b data-bal></b></div><div><small>${escapeHtml(copy.result)}</small><b data-res></b></div></div>` +
+        `<svg class="arun-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none"><line x1="0" x2="${width}" y1="${y}" y2="${y}"/><polyline/></svg>` +
+        `<ul class="arun-log"></ul><p class="arun-note">${escapeHtml(copy.note)}</p>`,
+      'arun',
+    );
+    const day = must<HTMLElement>(card, 'header span');
+    const balance = must<HTMLElement>(card, '[data-bal]');
+    const result = must<HTMLElement>(card, '[data-res]');
+    const line = must<SVGPolylineElement>(card, 'polyline');
+    const log = must<HTMLElement>(card, '.arun-log');
+
+    for (let step = 0; step <= AGENT_EVENTS.length; step++) {
+      const snapshot = agentSnapshot(step);
+      const change = snapshot.balance / AGENT_START_BALANCE - 1;
+      day.textContent = `${copy.day.replace('{n}', String(snapshot.day))} / ${AGENT_SIMULATED_DAYS}`;
+      balance.textContent = `${snapshot.balance.toFixed(4)} ETH`;
+      result.textContent = formatPercent(change);
+      result.className = change >= 0 ? 'up' : 'down';
+      line.setAttribute('points', equityPoints(snapshot.equity, width, height));
+      if (step > 0) {
+        log.insertAdjacentHTML('beforeend', `<li><span>${escapeHtml(copy.events[step - 1])}</span></li>`);
+        while (log.children.length > AGENT_LOG_LINES) log.firstElementChild?.remove();
+      }
+      await sleep(AGENT_STEP_MS, id);
+    }
+    card.classList.add('done');
+    must<HTMLElement>(card, 'header b').textContent = copy.done;
   };
 
   const play = async (index: number) => {

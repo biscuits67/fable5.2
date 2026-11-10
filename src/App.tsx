@@ -19,8 +19,14 @@ function Shell() {
   return (
     <>
       <Nav route={route} />
-      {route === 'app' ? <AppPage /> : <Landing />}
-      <Footer />
+      {route === 'app' ? (
+        <AppPage />
+      ) : (
+        <>
+          <Landing />
+          <Footer />
+        </>
+      )}
       <WalletModal />
     </>
   );

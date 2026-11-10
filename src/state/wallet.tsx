@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 
 /** Demo-only wallet state. Nothing here talks to a real wallet or network. */
 export interface WalletAccount {
+  nickname: string;
   walletName: string;
   balance: number;
 }

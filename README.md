@@ -28,9 +28,11 @@ npm run preview
 | Path | Purpose |
 | --- | --- |
 | `src/pages/Landing.tsx` | Landing page sections |
-| `src/pages/AppPage.tsx` | Demo workspace (`#/app`) with scripted answers |
+| `src/pages/AppPage.tsx` | Demo workspace (`#/app`): chat, history, portfolio and market panels |
+| `src/components/app/` | Workspace pieces: scripted chat logic, thinking block, composer, trading-agent run |
+| `src/data/agentRun.ts` | Scripted, deliberately modest trading-agent simulation |
 | `src/components/demo/` | Laptop mockup and the scripted demo player |
-| `src/components/WalletModal.tsx` | Simulated wallet connection with selectable demo balances |
+| `src/components/WalletModal.tsx` | Sign-up style dialog: nickname, simulated wallet, demo balance, confirmation |
 | `src/data/models.ts` | The four models and balance thresholds (0.1 / 0.5 ETH) |
 | `src/i18n/locales/` | Translations: en, es, it, fr, de, pt |
 | `src/state/` | Theme (dark / light) and demo wallet state |
